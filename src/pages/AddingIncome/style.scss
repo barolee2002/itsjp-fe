@@ -1,0 +1,25 @@
+.topic {
+    display: flex;
+    font-size: 32px;
+    font-weight: bold;
+    height : 64px;
+    align-content: center;
+
+}
+.input-box {
+    .input-title {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .input-content {
+        padding : 8px 12px;
+        width : 100%
+    }
+}
+
+.full-width {
+    width : 100%;
+}
+.add-button {
+    margin-top : 20px;
+}

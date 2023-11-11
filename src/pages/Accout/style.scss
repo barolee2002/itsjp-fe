@@ -1,0 +1,78 @@
+.page-title {
+    line-height: 64px;
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.title {
+    margin-top: 0;
+    color: #000;
+    font-family: Inter;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.accout-overview {
+    justify-content: space-between;
+    align-items: start;
+
+
+    .sub-title {
+        color: rgba(0, 0, 0, 0.47);
+        font-family: Inter;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 100;
+        line-height: normal;
+        margin-top: 8px;
+    }
+
+    .avatar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.accout-content {
+    justify-content: space-between;
+    align-items: center;
+
+    .edit-button {
+        border: none;
+        color: #29A073;
+        background-color: #f5f5f5;
+        font-family: Inter;
+        font-size: 25px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+}
+
+.accout-infor {
+    flex-direction: column;
+
+    .infor-input {
+        padding: 12px 16px;
+        border: 1px solid #ccc;
+        border-radius: 30px;
+    }
+
+    .attribute {
+        color: #000;
+        font-family: Inter;
+        font-style: normal;
+        line-height: normal;
+    }
+}
+.action{
+    margin-top: 50px;
+justify-content: space-between;
+.action-button{
+    padding : 0 48px;
+    background-color: #29A073;
+}
+}

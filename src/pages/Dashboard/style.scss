@@ -1,0 +1,25 @@
+.Statistics-content {
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    padding: 36px 12px;
+    .Statistics-icon {
+        font-size: 56px;
+        padding:8px;
+    }
+    .Statistics-money {
+        text-align: center;
+        margin-top: 8px;
+        font-weight: bold;
+        font-size: 35px;
+    }
+
+    .Statistics-title {
+        font-size: 20px;
+    }
+}
+.chart-title {
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+}
