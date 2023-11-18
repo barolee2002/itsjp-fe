@@ -1,23 +1,54 @@
-export interface incomes {
-    id : number,
-    name : string,
+export type incomes = {
+    incomeId : number,
     amount : number,
-    date : string,
+    time : string,
+    userId : number,
     category : string,
     key : number
 }
-export interface pays {
-    id : number,
-    name : string,
+export type pays = {
+    spendingId : number,
     amount : number,
-    date : string,
-    key : number
+    time : string,
+    key : number,
     category : string,
 }
-export interface paymentsPlan {
+export type chartType = {
     id : number,
-    name : string,
     amount : number,
-    key : number
-    date : string,
+    time : string,
+    key : number,
+    category : string,
+}
+export type paymentsPlan = {
+    plannerId : number,
+    // category : string,
+    amount : number,
+    key : number,
+    userId : number,
+    fromTime : string,
+    toTime : string
+}
+export type userInfor={
+    id : number,
+    userName : string,
+    fullName : string,
+    address : string,
+    email : string
+    avatarUrl: string,
+    password : string,
+    total : number,
+}
+export type userLogin ={
+    id: number,
+    username : string,
+    token : string,
+    expireTime : number,
+    isLogin : boolean
+}
+
+export type metadata = {
+    totalPages : number,
+    totalElements : number,
+    elements : number,
 }

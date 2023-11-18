@@ -12,6 +12,10 @@
         align-items: center;
         margin-top: 74px;
 
+        .form-login {
+            width: 100%;
+        }
+
         .title {
             color: #1E293B;
             text-shadow: 0px 4px 4px rgba(255, 255, 255, 0.25);
@@ -28,9 +32,10 @@
             padding: 12px 24px;
             margin-top: 24px;
         }
-        .forgot-password{
+
+        .forgot-password {
             width: 100%;
-            color : #78C552;
+            color: #78C552;
             text-align: end;
             margin-top: 8px;
             cursor: pointer;
@@ -48,14 +53,20 @@
             border-radius: 50px;
             font-weight: bold;
             background-color: #C8EE44;
-            border : none;
+            border: none;
         }
-        .signup{
+
+        .login-button:hover {
+            background-color: #29A073;
+        }
+
+        .signup {
             display: flex;
             justify-content: center;
-            .navigate-signup{
+
+            .navigate-signup {
                 margin-left: 8px;
-                color : #78C552;
+                color: #78C552;
                 cursor: pointer;
                 user-select: none;
 

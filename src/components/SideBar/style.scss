@@ -5,3 +5,14 @@
         border-radius : 30px;
     }
 }
+.user-action{
+    margin-bottom: 53px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .username {
+        margin-bottom: 75px;
+        font-size: 14px;
+        text-align: center;
+    }
+}

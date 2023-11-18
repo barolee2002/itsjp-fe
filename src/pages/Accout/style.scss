@@ -3,7 +3,9 @@
     font-weight: bold;
     font-size: 28px;
 }
-
+.ant-input-disabled{
+    color : #000 !important;
+}
 .title {
     margin-top: 0;
     color: #000;
@@ -59,6 +61,7 @@
         padding: 12px 16px;
         border: 1px solid #ccc;
         border-radius: 30px;
+        color : #000;
     }
 
     .attribute {
@@ -67,12 +70,16 @@
         font-style: normal;
         line-height: normal;
     }
+    
 }
-.action{
-    margin-top: 50px;
-justify-content: space-between;
-.action-button{
-    padding : 0 48px;
-    background-color: #29A073;
-}
+
+.action {
+    margin-top: 25px;
+    // justify-content: space-between;
+
+    .action-button {
+        padding: 0 48px;
+        background-color: #29A073;
+    }
+    
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row } from 'antd'
+import { Col, Row, Button } from 'antd'
 import {
     FundOutlined,
     SettingFilled,
@@ -13,8 +13,10 @@ import {
 import type { MenuProps } from 'antd';
 import { Menu, Avatar } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import logo from '../../assets/logo.jpg'
 import './style.scss'
+import { userInfor, userLogin } from '../../redux/selector';
 type MenuItem = Required<MenuProps>['items'][number];
 function getItem(
     label: React.ReactNode,
@@ -36,7 +38,6 @@ const items: MenuItem[] = [
     getItem('所得', '/admin/incomes', <ProjectFilled rotate={180} />),
     getItem('費用', '/admin/payments', <FundOutlined />),
     getItem('支出計画', '/admin/payments-plan', <EditOutlined />),
-    getItem('設定', '/sub5', <SettingFilled />),
     getItem('プロフィール', '/admin/accout', <UserOutlined />)
 ]
 
@@ -45,7 +46,12 @@ const footerItems: MenuItem[] = [
 ]
 export default function Sidebar() {
     const navigate = useNavigate()
-    
+    const userName = useSelector(userInfor)
+    console.log(userName);
+    const handleLogout = () => {
+        navigate('/admin/login')
+        localStorage.removeItem('userLogin')
+    }
     return (
         <Col style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', backgroundColor: 'rgb(244, 246, 248)', fontSize: '14px' }}>
             <Col>
@@ -68,14 +74,9 @@ export default function Sidebar() {
 
                 </Row>
             </Col>
-            <Col>
-                <Menu
-                    defaultSelectedKeys={['1']}
-                    defaultOpenKeys={['sub6']}
-                    mode="inline"
-                    theme="light"
-                    items={footerItems}
-                />
+            <Col className='user-action'>
+                <p className='username'>ウエルカム {userName.fullName}</p>
+                <Button icon={<CaretRightFilled />} onClick={handleLogout}>ログアウト</Button>
 
             </Col>
         </Col>

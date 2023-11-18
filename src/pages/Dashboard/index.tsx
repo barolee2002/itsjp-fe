@@ -7,82 +7,12 @@ import { PieConfig } from '@ant-design/charts'
 import {
     WalletOutlined
 } from '@ant-design/icons';
-
+import { useSelector } from 'react-redux';
 import './style.scss'
+import axios from 'axios';
+import axiosClient, { updateAxiosAccessToken } from '../../api/axiosClient';
+import { userLogin } from '../../redux/selector';
 
-const sevenDays = [
-    {
-        pay: 200,
-        date: '2023-10-23T02:11:44Z',
-        type: 'IN'
-    },
-    {
-        pay: 40,
-        date: '2023-10-22T02:11:44Z',
-        type: 'IN'
-    },
-    {
-        pay: 50,
-        date: '2023-10-21T02:11:44Z',
-        type: 'IN'
-    },
-    {
-        pay: 600,
-        date: '2023-10-20T02:11:44Z',
-        type: 'IN'
-    },
-    {
-        pay: 70,
-        date: '2023-10-19T02:11:44Z',
-        type: 'IN'
-    },
-    {
-        pay: 500,
-        date: '2023-10-18T02:11:44Z',
-        type: 'IN'
-    },
-    {
-        pay: 200,
-        date: '2023-10-17T02:11:44Z',
-        type: 'IN'
-    },
-    {
-        pay: 20,
-        date: '2023-10-23T02:11:44Z',
-        type: 'OUT'
-    },
-    {
-        pay: 60,
-        date: '2023-10-22T02:11:44Z',
-        type: 'OUT'
-    },
-    {
-        pay: 40,
-        date: '2023-10-21T02:11:44Z',
-        type: 'OUT'
-    },
-    {
-        pay: 80,
-        date: '2023-10-20T02:11:44Z',
-        type: 'OUT'
-    },
-    {
-        pay: 700,
-        date: '2023-10-19T02:11:44Z',
-        type: 'OUT'
-    },
-    {
-        pay: 200,
-        date: '2023-10-18T02:11:44Z',
-        type: 'OUT'
-    },
-    {
-        pay: 400,
-        date: '2023-10-17T02:11:44Z',
-        type: 'OUT'
-    },
-
-]
 const income = [
     {
         type: '給料',
@@ -103,25 +33,7 @@ const pay = [
         value: 25
     }
 ]
-const historyData = [
-    {
-        title: 'Iphone 13 promax',
-        type: 'mobile',
-        amount: 2000,
-        date: '2023-10-23T02:11:44Z',
-    },
-    {
-        title: 'Iphone 13 promax',
-        type: 'mobile',
-        amount: 2000,
-        date: '2023-10-23T02:11:44Z',
-    }, {
-        title: 'Iphone 13 promax',
-        type: 'mobile',
-        amount: 2000,
-        date: '2023-10-23T02:11:44Z',
-    }
-]
+
 interface chart {
     pay: number,
     date: string,
@@ -186,14 +98,42 @@ const chartConfig: PieConfig = {
         }
     },
 }
+interface overview {
+    incomeTotal: number,
+    spendingTotal: number,
+    savings: number
+}
+interface chartData {
+    amount: number,
+    category: string
+}
 
+const getTotal = (array : chartData[]) => {
+    let total : number = 0
+    array.map((item) => {
+        total += item.amount
+    })
+    return total
+}
+const chartDatatype = (array : chartData[]) => {
+    return array.map((item) => {
+        return {
+            type : item.category,
+            value : item.amount / getTotal(array)
+        }
+    })
+}
 export default function Dashboard() {
-    const [dayChart, setDayChart] = React.useState(7)
-    const [chartData, setChartData] = React.useState<chart[]>([])
-    const [historyDatam, setHistpryData] = React.useState<history[]>([])
-    const handleChangDay = (value: number) => {
-        setDayChart(value)
-    }
+    const [income, setIncome] = React.useState<chartData[]>([])
+    const [spending, setSpending] = React.useState<chartData[]>([])
+    const [overview, setOverview] = React.useState<overview>({
+        incomeTotal: 0,
+        spendingTotal: 0,
+        savings: 0
+    })
+    const user = useSelector(userLogin)
+    updateAxiosAccessToken(user.token)
+    
     const getFormattedDate = (date: Date) => {
         const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const month = monthNames[date.getMonth()];
@@ -209,35 +149,31 @@ export default function Dashboard() {
     };
 
     React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axiosClient.get(`/user/statistic/${user.id}`)
+                setOverview(response.data)
+                const incomeResponse = await axiosClient.get(`/income/${user.id}/statistic`)
+                setIncome(incomeResponse.data)
+                const spendingResponse = await axiosClient.get(`/spending/${user.id}/statistic`)
+                setSpending(spendingResponse.data)
+            } catch (err) {
+                console.log(err);
 
-        setChartData((prevChartData: chart[]) => {
-            return sevenDays.map((day) => {
-                let parseDay = new Date(day.date)
-                return { ...day, date: getFormattedDate(parseDay) }
-            })
-        })
-        setHistpryData((prevHistoryData: history[]) => {
-            return historyData.map((data, index) => {
-                let parseDay = new Date(data.date)
-                return { ...data, key: index, date: getHistoryFormattedDate(parseDay) }
-            })
-        })
+            }
+        }
+        fetchData()
     }, [])
-
-    // const chartConfig = {
-    //     data: chartData,
-    //     xField: 'date',
-    //     yField: 'pay',
-    //     seriesField: 'type',
-    //     smooth: false,
-    // }
+    console.log(overview);
+    
+    console.log(chartDatatype(income));
     const incomeChartConfig = {
         ...chartConfig,
-        data: income,
+        data: chartDatatype(income),
     }
     const payChartConfig = {
         ...chartConfig,
-        data: pay,
+        data: chartDatatype(spending),
     }
 
 
@@ -246,7 +182,7 @@ export default function Dashboard() {
         <div style={{ height: '100%' }}>
             <Row style={{ height: '64px', fontWeight: 'bold', alignContent: 'center', fontSize: '28px' }}><p>ダッシュボード</p> </Row>
             <Row gutter={[2, 24]} style={{ justifyContent: 'space-between' }}>
-                <Col span={16}>
+                <Col span={20}>
                     <Row gutter={[16, 24]}>
                         <Col className='Statistics-box' span={8}>
                             <Row className='Statistics-content' style={{ backgroundColor: '#ddd' }}>
@@ -258,7 +194,7 @@ export default function Dashboard() {
                                         総合収支
                                     </Row>
                                     <Row className='Statistics-money'>
-                                        $3000
+                                        ${overview?.incomeTotal}
                                     </Row>
                                 </Col>
                             </Row>
@@ -273,7 +209,7 @@ export default function Dashboard() {
                                         総支出額
                                     </Row>
                                     <Row className='Statistics-money'>
-                                        $3000
+                                        ${overview?.spendingTotal}
                                     </Row>
                                 </Col>
                             </Row>
@@ -288,54 +224,16 @@ export default function Dashboard() {
                                         合計節約
                                     </Row>
                                     <Row className='Statistics-money'>
-                                        $3000
+                                        ${overview?.savings}
                                     </Row>
                                 </Col>
                             </Row>
                         </Col>
                     </Row>
-                    {/* <Row style={{ marginTop: '16px' }}>
-                        <Row style={{ width: '100%', justifyContent: 'space-between' }}>
-                            <Col span={12} style={{ display: 'flex', flexWrap: 'wrap', alignContent: 'center' }}>Working Capital</Col>
-                            
-                            <Col span={4} style={{ display: 'flex', alignItems: 'center' }}>
-                                <Select
-                                    labelInValue
-                                    defaultValue={{ value: 7, label: '7 days' }}
-
-                                    onChange={(value) => { handleChangDay(value.value) }}
-                                    options={[
-                                        {
-                                            value : 7,
-                                            label: '7 days',
-                                        },
-                                        {
-                                            value: 30,
-                                            label: '30 days'
-                                        },
-                                        {
-                                            value: 365,
-                                            label: '1 year'
-                                        }
-                                    ]}
-                                />
-
-                            </Col>
-                        </Row>
-                        <Row style={{width : '100%'}}>
-                            <Line style={{width :'100%', height :'224px'}} {...chartConfig} />
-                        </Row>
-                    </Row>
-                    <Row style={{ marginTop: '16px' }}>
-                        <Table style={{width :'100%'}} dataSource={historyDatam} columns={columns} pagination ={false} size='small'/>
-                    </Row> */}
                 </Col>
-                {/* <Col span={8}>
-                    fyhjfgjfgjfgjfg
-                </Col> */}
 
             </Row>
-            <Row gutter={[16, 32]} style={{marginTop : '12px'}}>
+            <Row gutter={[16, 32]} style={{ marginTop: '12px' }}>
                 <Col span={12}>
                     <Row className='chart-title'>
                         総合収支
