@@ -5,3 +5,31 @@
 ant-table-cell-row-hover {
     display: none;
 }
+.filter-container{
+    position: relative;
+}
+.filter-row{
+    margin: 12px;
+}
+.filter-option {
+    display: flex;
+    justify-content: center;
+}
+.filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    background-color: #ccc;
+    top : 10px;
+    right : 0;
+    width : 600px;
+    z-index: 1;
+    padding : 16px;
+    
+    border-radius : 20px;
+}
+.text-center {
+    margin :0;
+    text-align: center;
+}

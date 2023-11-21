@@ -46,11 +46,11 @@ const footerItems: MenuItem[] = [
 ]
 export default function Sidebar() {
     const navigate = useNavigate()
-    const userName = useSelector(userInfor)
+    const userName = useSelector(userLogin)
     console.log(userName);
     const handleLogout = () => {
         navigate('/admin/login')
-        localStorage.removeItem('userLogin')
+        localStorage.setItem('userLogin' , '')
     }
     return (
         <Col style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', backgroundColor: 'rgb(244, 246, 248)', fontSize: '14px' }}>
@@ -67,15 +67,17 @@ export default function Sidebar() {
                         mode="inline"
                         theme="light"
                         items={items}
-                        onSelect={(e) => {
-                            navigate(e.key)
+                        onClick={(e) => {
+                            console.log(e.key);
+                            
+                            navigate(`${e.key}`)
                         }}
                     />
 
                 </Row>
             </Col>
             <Col className='user-action'>
-                <p className='username'>ウエルカム {userName.fullName}</p>
+                <p className='username'>ウエルカム {userName.username}</p>
                 <Button icon={<CaretRightFilled />} onClick={handleLogout}>ログアウト</Button>
 
             </Col>

@@ -2,6 +2,8 @@
 import axios from 'axios';
 
 import queryString from 'query-string';
+import { userLogin } from '../utils/interface/interface';
+const REFRESH_THRESHOLD = 30000;
 
 // Cai dat config mac dinh cho http request
 // Tham khao: `https://github.com/axios/axios#request-config`
@@ -26,23 +28,48 @@ axiosClient.interceptors.response.use(
 
     return response;
   },
-  (error) => {
-    let errorMessage = null;
-    const response = error.response;
-    if (response && (response.status === 403 || response.status === 401)) {
-      return;
-    }
-    if (response && response.data) {
-      const data = response.data;
-      const { result, message } = response.data;
-      if (result === 'failed') {
-        errorMessage = message;
+  async function (error) {
+    const originalRequest = error.config;
+    if ((error.response.status === 403 || error.response.status === 401) && !originalRequest._retry) {
+      originalRequest._retry = true;
+      console.log('co nhay vao');
+      const loginUser = localStorage.getItem('userLogin')
+      let user: userLogin = {
+        isLogin: false,
+        username: '',
+        password: '',
+        token: '',
+        expireTime: 0,
+        id: 0
       }
+      if (loginUser !== null) {
+        user = JSON.parse(loginUser)
+      }
+      const current = Date.now()
+      if (user.expireTime - current <= REFRESH_THRESHOLD) {
+        console.log(user.username, user.password);
+        updateAxiosAccessToken('')
+        await axiosClient.post('/user/login', {
+          userName: user.username,
+          password: user.password
+        })
+          .then((res) => {
+
+            localStorage.setItem('userLogin', JSON.stringify({ ...user, token: res.data.token, expireTime: res.data.expireTime }));
+            axiosClient.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+
+      console.log(axiosClient.defaults.headers.common['Authorization'])
+
+          })
+          .catch(error => {
+            console.error("Error refreshing token:", error);
+          });
+          axiosClient(originalRequest)
+      }
+      console.log(axiosClient.defaults.headers.common['Authorization'])
+      return axiosClient(originalRequest);
     }
-    if (errorMessage) {
-      /* empty */
-    }
-    throw error;
+    return Promise.reject(error);
   }
 );
 

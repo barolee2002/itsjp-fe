@@ -6,8 +6,11 @@ export const authenSlice = createSlice({
         userLogin : <userLogin>{}
     },
     reducers: {
-        login: (state, action) => {
-            state.userLogin = action.payload
+        login: (state) => {
+            const infor = localStorage.getItem('userLogin');
+            if(infor !== null) {
+                state.userLogin = JSON.parse(infor)
+            }
         },
         logout: (state) => {
             localStorage.removeItem('userLogin');

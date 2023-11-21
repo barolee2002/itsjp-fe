@@ -35,6 +35,7 @@ function Accout() {
     updateAxiosAccessToken(user.token)
     const [edit, setEdit] = React.useState(false)
     const [userInfor, setUserInfor] = React.useState<userInfor>(initstate)
+    const [newPassword, setNewPass] = React.useState ('')
     const [checkNewPassword, setCheckNewPassword] = React.useState(true)
     // const [noti, contextHolder] = notification.useNotification();
     const openNotification = (message : string) => {
@@ -62,11 +63,16 @@ function Accout() {
         })
     }
     const handleUpdate = async () => {
-        await axiosClient.put(`/user/${user.id}`,{...userInfor})
+        (checkNewPassword && newPassword !== '' ) && await axiosClient.put(`/user/${user.id}`,{
+            ...userInfor
+        })
         .then(() => {
             dispatch(updateInfor(userInfor))
             openNotification('情報が正常に変更されました')
         })
+        if(!(checkNewPassword && newPassword !== '' )) {
+            alert('すべての情報を入力してください')
+        }
     }
     const handleCheckPassword = (newPassword: string) => {
         newPassword === userInfor.password ? setCheckNewPassword(true) : setCheckNewPassword(false)
@@ -132,7 +138,7 @@ function Accout() {
                             disabled={!edit}
                             prefix={<MailFilled sizes='large' />}
                             placeholder='binh@gmail.com'
-                            value={userInfor.email}
+                            value={userInfor.userName}
                             onChange={(e) => {
                                 handleChangeInfor('userName', e.target.value)
                             }}
@@ -160,7 +166,10 @@ function Accout() {
                                     className='infor-input'
                                     placeholder='Nguyen Binh'
                                     onFocus={()=>setCheckNewPassword(true)}
-                                    onChange={(e) => setCheckNewPassword(true)}
+                                    onChange={(e) => {
+                                        setCheckNewPassword(true)
+                                        setNewPass(e.target.value)
+                                    }}
                                     onBlur={(e) => handleCheckPassword(e.target.value)}
                                 ></Input>
                             </Col>
@@ -185,7 +194,11 @@ function Accout() {
                                     type='primary'
                                     shape='round'
                                     size='large'
-                                    onClick={() => setRefesh(refesh + 1)}
+                                    onClick={() => {
+
+                                        setRefesh(refesh + 1)
+                                        setEdit(false)
+                                    }}
                                 >キャンセル</Button>
                             </Col>
                             {/* <Col span={12} offset={12}>

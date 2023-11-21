@@ -6,18 +6,20 @@ import { Dayjs } from 'dayjs';
 import { useNavigate } from 'react-router';
 import axiosClient, { updateAxiosAccessToken } from '../../api/axiosClient';
 import { userLogin } from '../../redux/selector';
+import { ErrorMessage } from '../../components/ErrorMessage';
 function AddingIncome() {
     const navigate = useNavigate()
     const user = useSelector(userLogin)
     updateAxiosAccessToken(user.token)
     const [amount, setAmount] = React.useState(0)
     const [date, setDate] = React.useState('')
+    const [checkValidNumber, setCheckNumer] = React.useState(true)
     const [category, setCategory] = React.useState('')
     const handleSetDate = (date: Dayjs | null, dateString: string) => {
         setDate(dateString);
     };
     const handleAddIncome = async() => {
-        await axiosClient.post('/income',{
+        (amount !== 0 && date !== '' && category !== '') && await axiosClient.post('/income',{
             userId : user.id,
             amount,
             date,
@@ -26,6 +28,9 @@ function AddingIncome() {
         .then ( () => {
             navigate('/admin/incomes')
         })
+        if (!(amount !== 0 && date !== '' && category !== '')) {
+            alert ('すべての情報を入力してください')
+        }
     }
     return (
         <div>
@@ -40,7 +45,16 @@ function AddingIncome() {
                     </Col>
                     <Col span={12} className='input-box'>
                         <p className='input-title'>額</p>
-                        <Input type='number' className='input-content' placeholder='$9999' onChange={(e) => { setAmount(parseInt(e.target.value)) }} />
+                        <Input type='number' 
+                        className='input-content' 
+                        placeholder='$9999' 
+                        onChange={(e) => { 
+                            setAmount(parseInt(e.target.value)) 
+                            parseInt(e.target.value) < 0 ? setCheckNumer(false) : setCheckNumer(true)
+                        }} 
+                        onFocus={() => setCheckNumer(true)}
+                        />
+                        {!checkValidNumber && <ErrorMessage errorText='数値を負にすることはできません' />}
                     </Col>
                     <Col span={12} className='input-box'>
                         <p className='input-title'>時間</p>

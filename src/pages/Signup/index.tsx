@@ -9,12 +9,20 @@ import { useNavigate } from 'react-router';
 import logo from '../../assets/logo.jpg'
 import axiosClient from '../../api/axiosClient';
 import validation from '../../utils/validation';
+import { ErrorMessage } from '../../components/ErrorMessage';
 // import './style.scss'
+interface error {
+    type : string,
+    message : string[],
+}
 function SignUp() {
     const [userName, setUserName] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [checkSussessSignUp, setCheckSussessSignUp] = React.useState(false)
-    const [errorMessage, setErrorMessage] = React.useState('')
+    const [errorEmail, setErrorEmail] = React.useState('') 
+    const [errorPassword, setErrorPassword] = React.useState('') 
+    const [errorConfirmPassword, setErrorConfirmPassword] = React.useState('') 
+
     const navigate = useNavigate()
     const handleSignup = async () => {
         checkSussessSignUp &&
@@ -35,7 +43,8 @@ function SignUp() {
     const handleSignin = () => {
         navigate('/admin/login')
     }
-
+    console.log(checkSussessSignUp);
+    
     return (
         <BaseLogin>
             <Col className='login'>
@@ -47,12 +56,30 @@ function SignUp() {
                         placeholder='電子メールアドレス'
                         onChange={(e) => {
                             setUserName(e.target.value)
+
                         }}
                         onBlur={(e) => {
-                            validation({ input: e.target.value, newPassword: '' }).isEmailValid.result ?
-                                setCheckSussessSignUp(true) : setCheckSussessSignUp(false)
+                            if(validation({ input: e.target.value, newPassword: '' }).isEmailValid.result) {
+                                setCheckSussessSignUp(true)
+                                setErrorEmail('')
+
+                            }
+                            else {
+                                setCheckSussessSignUp(false)
+                                setErrorEmail('このフィールドは電子メールである必要があります')
+                            }
+                            if(validation({ input: e.target.value, newPassword: '' }).isRequied.result) {
+                                setCheckSussessSignUp(true)
+                                setErrorEmail('')
+                            }
+                            else {
+                                setCheckSussessSignUp(false)
+                                setErrorEmail('このフィールドを空白のままにすることはできません')
+                            }
                         }}
+                        onFocus={()=>setErrorEmail('')}
                     />
+                    <ErrorMessage errorText={errorEmail} />
                     <Input className='input'
 
                         type='password'
@@ -60,22 +87,43 @@ function SignUp() {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder='パスワード'
                         onBlur={(e) => {
-                            validation({ input: e.target.value, newPassword: '' }).isRequied.result ?
-                                setCheckSussessSignUp(true) : setCheckSussessSignUp(false)
+                            if(validation({ input: e.target.value, newPassword: '' }).isRequied.result)
+                            {
+                                setCheckSussessSignUp(true)
+                                setErrorPassword('')
 
-
+                            } else {
+                                setCheckSussessSignUp(false)
+                                setErrorPassword('このフィールドを空白のままにすることはできません')
+                            }
                         }}
+                        onFocus={()=>{
+                            setErrorPassword('')
+                            setErrorConfirmPassword('')
+                        }}
+
                     />
+                    <ErrorMessage errorText={errorPassword} />
+
                     <Input className='input'
                         type='password'
                         prefix={<KeyOutlined color='disable' />}
                         placeholder='パスワードの確認'
                         onBlur={(e) => {
-                            validation({ input: password, newPassword: e.target.value }).isPasswordValid.result ?
-                                setCheckSussessSignUp(true) :
+                            if(validation({ input: password, newPassword: e.target.value }).isPasswordValid.result)
+                            {
+                                setCheckSussessSignUp(true)
+                                setErrorConfirmPassword('')
+
+                            } else {
                                 setCheckSussessSignUp(false)
+                                setErrorConfirmPassword('再入力したパスワードが一致しません')
+                            }  
                         }}
+                        onFocus={() =>setErrorConfirmPassword('')}
                     />
+                    <ErrorMessage errorText={errorConfirmPassword} />
+
                 </Row>
                 <Row className='login-action'>
                     <button className='login-button'

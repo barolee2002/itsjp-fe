@@ -44,7 +44,8 @@ export type userLogin ={
     username : string,
     token : string,
     expireTime : number,
-    isLogin : boolean
+    isLogin : boolean,
+    password : string
 }
 
 export type metadata = {

@@ -8,10 +8,10 @@ import './style.scss'
 export default function HomePage() {
     const navigate = useNavigate()
     const handleLogin = () => {
-        navigate(`login`)
+        navigate(`admin/login`)
     }
     const handleSignup = () => {
-        navigate(`signup`)
+        navigate(`admin/signup`)
     }
     return (
         <BaseLogin>

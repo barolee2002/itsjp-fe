@@ -17,7 +17,7 @@ interface RouteConfig {
     layout?: React.ComponentType | null;
 }
 const publicRoutes : RouteConfig[] =[
-    {path :'/admin', component : HomePage,layout : null},
+    {path :'/', component : HomePage,layout : null},
     {path :'/admin/signup', component : SignUp,layout : null},
     {path :'/admin/login', component : Login,layout : null},
     {path : '/admin/dashboard' , component : Dashboard},
@@ -35,3 +35,7 @@ const publicRoutes : RouteConfig[] =[
 ]
 
 export {publicRoutes}
+// import PrivateRoute from "./privateRoutes";
+// import PublicRoute from "./publicRoutes";
+// import ProtectedRoutes from "./protectedRoutes";
+// export {PrivateRoute, PublicRoute, ProtectedRoutes}

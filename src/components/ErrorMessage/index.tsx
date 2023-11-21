@@ -15,6 +15,6 @@ const styles = {
         // border: '1px solid rgb(245, 33, 40)',
         color: 'rgb(245, 33, 40)',
         // margin : 0
-
+        marginBottom: 0,
     },
 };

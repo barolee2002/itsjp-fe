@@ -1,5 +1,5 @@
 import React from 'react';
-import { PaginationProps, Row, Button, Col } from 'antd';
+import { PaginationProps, Row, Button, Col, Input } from 'antd';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormattedDate } from '../../utils/dateFormat';
@@ -9,17 +9,25 @@ import { chartType, incomes, metadata } from '../../utils/interface/interface';
 import { income, userLogin } from '../../redux/selector';
 import axiosClient, { updateAxiosAccessToken } from '../../api/axiosClient';
 import { deleteInome, updateIncomes } from './incomeSlice';
+import { login } from '../../components/BaseHomePage/authenSlice';
+import { token } from '../../utils/userLogin';
 
 function Incomes() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const user = useSelector(userLogin)
+
     const [refesh, setRefesh] = React.useState(0)
-    
     const incomesList = useSelector(income)
-    if (user != null) {
-        updateAxiosAccessToken(user.token)
-    }
+    const [openfilter, setOpenFilter] = React.useState(false)
+    const user = useSelector(userLogin)
+
+    // updateAxiosAccessToken(user.token)
+    // React.useLayoutEffect(() => {
+    //     RefeshToken()
+    //     dispatch(login())
+
+    // }, [user.token])
+    // user = useSelector(userLogin)
     const [metadata, setMetadata] = React.useState<metadata>(
         {
             totalPages: 0,
@@ -28,7 +36,7 @@ function Incomes() {
         }
     )
     const [incomeHistory, setIncomeHistory] = React.useState<chartType[]>([])
-    
+
     const handleOpenEdit = (item: chartType) => {
         navigate(`${item.key}`)
     }
@@ -37,8 +45,6 @@ function Incomes() {
         dispatch(deleteInome(item.key))
 
     }
-    
-
     const handleShowSizeChange: PaginationProps['onShowSizeChange'] = (current, pageSize) => {
         console.log(current, pageSize);
     };
@@ -57,12 +63,11 @@ function Incomes() {
                 totalElements: response.data.totalElements,
                 elements: response.data.elements
             })
-
         }
         fetchData()
 
     }, [refesh])
-    
+
     React.useEffect(() => {
         setIncomeHistory(() => {
             return incomesList.map((item, index) => {
@@ -87,14 +92,40 @@ function Incomes() {
                 <Col style={{ fontSize: '28px', fontWeight: 'bold' }}>所得</Col>
                 <Col span={8}>
                     <Row gutter={[12, 24]} style={{ justifyContent: 'space-between' }}>
-                        <Col span={12}>
+                        <Col className='filter-container' span={12}>
                             <Button
                                 type='primary'
                                 shape='round'
                                 size='large'
                                 style={{ padding: '0 32px', width: '100%', backgroundColor: '#29A073' }}
-
+                                onClick={() => setOpenFilter(!openfilter)}
                             >フィルター</Button>
+                            {openfilter && <Col className='filter-option' onBlur={()=> setOpenFilter(false)}>
+                                <Row className='filter'>
+                                    <Row gutter={12} className='filter-row'>
+                                        <p className='text-center'>金額でフィルタリングする</p>
+                                        <Col>
+                                            <Input 
+                                            placeholder='から。。。' />
+                                        </Col>
+                                        <Col>
+                                            <Input placeholder='まで。。。' />
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={12} className='filter-row'>
+                                        <p className='text-center'>日付でフィルタリングする</p>
+                                        <Col>
+                                            <Input placeholder='から。。。' />
+                                        </Col>
+                                        <Col>
+                                            <Input placeholder='まで。。。' />
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={12} className='filter-row'>
+                                        <Button >フィルタリング</Button>
+                                    </Row>
+                                </Row>
+                            </Col>}
                         </Col>
                         <Col span={12}>
                             <Button
@@ -104,6 +135,7 @@ function Incomes() {
                                 style={{ padding: '0 32px', width: '100%', backgroundColor: '#29A073' }}
                                 onClick={handleAddIncome}
                             >作成</Button>
+
                         </Col>
                     </Row>
                 </Col>

@@ -24,6 +24,7 @@ function IncomeDetail() {
     const param = useParams()
     const token = useSelector(userLogin)
     updateAxiosAccessToken(token.token)
+    const [checkValidNumber, setCheckNumer] = React.useState(true)
     const [income, setIncome] = React.useState<incomes>(initState)
     const handleSetDate = (date: Dayjs | null, dateString: string) => {
         setIncome((prev) => {
@@ -59,7 +60,7 @@ function IncomeDetail() {
             <Row className='content'>
                 <Row gutter={[72, 0]} className='full-width'>
                     <Col span={12} className='input-box'>
-                        <p className='input-title'>名前</p>
+                        <p className='input-title'>カテゴリー</p>
                         <Input className='input-content' placeholder='給料' onChange={(e) => {
                             setIncome((prev) => {
                                 return {
@@ -71,30 +72,28 @@ function IncomeDetail() {
                     </Col>
                     <Col span={12} className='input-box'>
                         <p className='input-title'>額</p>
-                        <Input type='number' className='input-content' placeholder='$9999' onChange={(e) => {
-                            setIncome((prev) => {
-                                return {
-                                    ...prev,
-                                    amount: parseInt(e.target.value)
-                                }
-                            })
-                        }} value={income.amount} />
+                        <Input
+                            type='number'
+                            className='input-content'
+                            placeholder='$9999'
+                            onChange={(e) => {
+                                parseInt(e.target.value) < 0 ? setCheckNumer(false) : setCheckNumer(true)
+
+                                setIncome((prev) => {
+                                    return {
+                                        ...prev,
+                                        amount: parseInt(e.target.value)
+                                    }
+                                })
+                            }} 
+                            
+                            value={income.amount} />
                     </Col>
                     <Col span={12} className='input-box'>
                         <p className='input-title'>時間</p>
                         <DatePicker className='input-content' onChange={(date, dateString) => handleSetDate(date, dateString)} placeholder='22/2/2022' value={dayjs(income.time)} />
                     </Col>
-                    <Col span={12} className='input-box'>
-                        <p className='input-title'>カテゴリー</p>
-                        <Input className='input-content' placeholder='??????' onChange={(e) => {
-                            setIncome((prev) => {
-                                return {
-                                    ...prev,
-                                    category: e.target.value
-                                }
-                            })
-                        }} value={income.category} />
-                    </Col>
+
                 </Row>
             </Row>
             <Row className='add-button'>

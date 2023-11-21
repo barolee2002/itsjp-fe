@@ -7,32 +7,13 @@ import { PieConfig } from '@ant-design/charts'
 import {
     WalletOutlined
 } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './style.scss'
 import axios from 'axios';
 import axiosClient, { updateAxiosAccessToken } from '../../api/axiosClient';
 import { userLogin } from '../../redux/selector';
+import { login } from '../../components/BaseHomePage/authenSlice';
 
-const income = [
-    {
-        type: '給料',
-        value: 55
-    },
-    {
-        type: '奨学金',
-        value: 45
-    },
-]
-const pay = [
-    {
-        type: '家のお金',
-        value: 75
-    },
-    {
-        type: '学費',
-        value: 25
-    }
-]
 
 interface chart {
     pay: number,
@@ -46,31 +27,6 @@ interface history {
     amount: number,
     date: string
 }
-const columns: ColumnsType<history> = [
-    {
-        title: 'BUSINESS',
-        dataIndex: 'title',
-        key: 'name',
-        render: (text: string) => <p style={{ fontWeight: 'bold' }}>{text}</p>
-
-    },
-    {
-        title: 'TYPE',
-        dataIndex: 'type',
-        key: 'type'
-    },
-    {
-        title: 'AMOUNT',
-        dataIndex: 'amount',
-        key: 'amount',
-        render: (amount: number) => <p style={{ fontWeight: 'bold' }}>$ {amount}</p>
-    },
-    {
-        title: 'DATE',
-        dataIndex: 'date',
-        key: 'date'
-    }
-]
 
 const chartConfig: PieConfig = {
     // appendPadding: 10,
@@ -124,6 +80,7 @@ const chartDatatype = (array : chartData[]) => {
     })
 }
 export default function Dashboard() {
+    const dispatch = useDispatch()
     const [income, setIncome] = React.useState<chartData[]>([])
     const [spending, setSpending] = React.useState<chartData[]>([])
     const [overview, setOverview] = React.useState<overview>({
@@ -132,21 +89,6 @@ export default function Dashboard() {
         savings: 0
     })
     const user = useSelector(userLogin)
-    updateAxiosAccessToken(user.token)
-    
-    const getFormattedDate = (date: Date) => {
-        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const month = monthNames[date.getMonth()];
-        const day = date.getDate().toString().padStart(2, '0');
-        return `${month} ${day}`;
-    };
-    const getHistoryFormattedDate = (date: Date) => {
-        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const month = monthNames[date.getMonth()];
-        const day = date.getDate().toString().padStart(2, '0');
-        const year = date.getFullYear().toString()
-        return `${month} ${day} ${year}`;
-    };
 
     React.useEffect(() => {
         const fetchData = async () => {
@@ -164,9 +106,7 @@ export default function Dashboard() {
         }
         fetchData()
     }, [])
-    console.log(overview);
     
-    console.log(chartDatatype(income));
     const incomeChartConfig = {
         ...chartConfig,
         data: chartDatatype(income),

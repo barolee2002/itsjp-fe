@@ -48,7 +48,8 @@ function TableContent(props: Props) {
         {
             title: '額',
             dataIndex: 'amount',
-            key: 'amount'
+            key: 'amount',
+            render : (item) => <p>{item} $</p>
         },
         {
             title: '時間',

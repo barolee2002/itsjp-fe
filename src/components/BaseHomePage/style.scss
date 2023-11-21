@@ -57,7 +57,7 @@
         }
 
         .login-button:hover {
-            background-color: #29A073;
+            background-color: darken($color: #C8EE44, $amount: 20);
         }
 
         .signup {

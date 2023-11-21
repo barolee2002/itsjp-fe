@@ -33,10 +33,12 @@ function Login() {
             console.log(JSON.stringify(response.data));
             const userLogin = {
                 ...response.data,
+                password : password,
                 isLogin: true
             }
             localStorage.setItem('userLogin', JSON.stringify(userLogin))
             dispatch(login(userLogin))
+            updateAxiosAccessToken(userLogin.token)
             navigate(`/admin/dashboard`)
         } catch (error: any) {
 

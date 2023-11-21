@@ -56,7 +56,7 @@ function PaymentDetail() {
             <Row className='content'>
                 <Row gutter={[72, 0]} className='full-width'>
                     <Col span={12} className='input-box'>
-                        <p className='input-title'>名前</p>
+                        <p className='input-title'>カテゴリー</p>
                         <Input className='input-content' placeholder='給料' onChange={(e) => {
                             setSpending((prev) => {
                                 return {
@@ -81,17 +81,7 @@ function PaymentDetail() {
                         <p className='input-title'>時間</p>
                         <DatePicker className='input-content' onChange={(date, dateString) => handleSetDate(date, dateString)} placeholder='22/2/2022' value={dayjs(spending.time)} />
                     </Col>
-                    <Col span={12} className='input-box'>
-                        <p className='input-title'>カテゴリー</p>
-                        <Input className='input-content' placeholder='??????' onChange={(e) => {
-                            setSpending((prev) => {
-                                return {
-                                    ...prev,
-                                    category: e.target.value
-                                }
-                            })
-                        }} value={spending.category} />
-                    </Col>
+                    
                 </Row>
             </Row>
             <Row className='add-button'>
