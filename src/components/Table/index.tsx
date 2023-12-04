@@ -8,6 +8,8 @@ import {
 } from '@ant-design/icons';
 import './style.scss'
 import { chartType, metadata } from '../../utils/interface/interface';
+import deleteIcon from '../../assets/trash-2.svg'
+import editIcon from '../../assets/editRow.svg'
 
 interface Props {
     onDelete: (item: chartType) => void,
@@ -17,12 +19,12 @@ interface Props {
     onChangePage: (current: number, pageSize: number) => void,
     metadata: metadata
 }
-const initState =  {
-    id : 0,
-    amount : 0,
-    time : '',
-    key : 0,
-    category : '',
+const initState = {
+    id: 0,
+    amount: 0,
+    time: '',
+    key: 0,
+    category: '',
 }
 function TableContent(props: Props) {
     const { onDelete, onEdit, dataSource, onShowSizeChange, onChangePage, metadata } = props
@@ -38,33 +40,47 @@ function TableContent(props: Props) {
         {
             title: 'ID',
             dataIndex: 'id',
+            className: 'noHover',
+            width: 50,
             key: 'id',
         },
         {
             title: 'カテゴリー',
             dataIndex: 'category',
+            className: 'noHover',
+
+            width: 300,
             key: 'category'
         },
         {
             title: '額',
             dataIndex: 'amount',
+            width: 195,
+            className: 'noHover',
+
             key: 'amount',
-            render : (item) => <p>{item} $</p>
+            render: (item) => <p className='m-0'>$ {item}</p>
         },
         {
             title: '時間',
             dataIndex: 'date',
+            className: 'noHover',
+
+            width: 195,
             key: 'date'
         },
         {
             title: 'アクション',
+            className: 'noHover',
+            width: 125,
             key: 'id',
-            render: (item) => <p>
-                <Button icon={<EditFilled />} onClick={() => onEdit(item)} />
-                <Button icon={<DeleteOutlined />} onClick={() => {
+            render: (item) => <p className='m-0'>
+                <Button onMouseOver={() => { }} className={item.id % 2 === 0 ? 'action-button light' : 'action-button dark'} icon={<img src={editIcon} />} onClick={() => onEdit(item)} />
+                <Button className={item.id % 2 === 0 ? 'action-button light' : 'action-button dark'} icon={<img src={deleteIcon} />} onClick={() => {
+
                     setItemDelete(item)
                     showModal()
-                    }} />
+                }} />
             </p>
         },
 
@@ -73,12 +89,21 @@ function TableContent(props: Props) {
     return (
         <div >
             <Table
+                className='table-wrapper'
                 dataSource={dataSource}
                 columns={columns}
                 rowClassName={(record, index) => (index % 2 === 0 ? 'dark' : 'light')}
-                pagination={false} />
+                pagination={false}
+                onRow={(record, rowIndex) => {
+                    return {
+                        onMouseOver: (e) => {
+                            e.cancelable = true
+                        }
+                    };
+                }}
+            />
 
-            <Row style={{ justifyContent: 'center', backgroundColor: '#fafafa', padding: '4px 0' }}>
+            {/* <Row style={{ justifyContent: 'center', backgroundColor: '#fafafa', padding: '4px 0' }}>
 
                 <Pagination
                     showSizeChanger
@@ -87,7 +112,7 @@ function TableContent(props: Props) {
                     defaultCurrent={1}
                     total={metadata.totalPages}
                 />
-            </Row>
+            </Row> */}
             <Modal
                 open={open}
                 onOk={() => {

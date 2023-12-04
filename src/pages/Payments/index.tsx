@@ -1,5 +1,5 @@
 import React from 'react';
-import { PaginationProps, Row, Button, Col } from 'antd';
+import { PaginationProps, Row, Button, Col,Input } from 'antd';
 import { useSelector } from 'react-redux';
 import { getFormattedDate } from '../../utils/dateFormat';
 import { useDispatch } from 'react-redux';
@@ -19,6 +19,8 @@ function Payments() {
     if (user != null) {
         updateAxiosAccessToken(user.token)
     }
+    const [openfilter, setOpenFilter] = React.useState(false)
+
     const [paymentHistory, setPaymentHistory] = React.useState<chartType[]>([])
     const [paymentList, setPaymentList] = React.useState<pays[]>([])
     const [refesh, setRefesh] = React.useState(0)
@@ -78,30 +80,59 @@ function Payments() {
     }, [spendingList])
     return (
         <div >
-            <Row style={{ height: '64px', justifyContent: 'space-between', alignContent: 'center' }}>
-                <Col style={{ fontSize: '28px', fontWeight: 'bold' }}>支出</Col>
+            <Row className='page-heading-income'>
+                <Col className='page-heading-income-name'>支出</Col>
                 <Col span={8}>
                     <Row gutter={[12, 24]} style={{ justifyContent: 'space-between' }}>
-                        <Col span={12}>
+                        <Col className='filter-container' span={12}>
                             <Button
                                 type='primary'
                                 shape='round'
-                                size='large'
-                                style={{ padding: '0 32px', width: '100%', backgroundColor: '#29A073' }}
-                            >埋め</Button>
+                                // size='large'
+                                className='page-heading-income-button'
+                                onClick={() => setOpenFilter(!openfilter)}
+                            >フィルター</Button>
+                            {openfilter && <Col className='filter-option' onBlur={()=> setOpenFilter(false)}>
+                                <Row className='filter'>
+                                    <Row gutter={12} className='filter-row'>
+                                        <p className='text-center'>金額でフィルタリングする</p>
+                                        <Col>
+                                            <Input 
+                                            placeholder='から。。。' />
+                                        </Col>
+                                        <Col>
+                                            <Input placeholder='まで。。。' />
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={12} className='filter-row'>
+                                        <p className='text-center'>日付でフィルタリングする</p>
+                                        <Col>
+                                            <Input placeholder='から。。。' />
+                                        </Col>
+                                        <Col>
+                                            <Input placeholder='まで。。。' />
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={12} className='filter-row'>
+                                        <Button >フィルタリング</Button>
+                                    </Row>
+                                </Row>
+                            </Col>}
                         </Col>
                         <Col span={12}>
                             <Button
                                 type='primary'
                                 shape='round'
-                                size='large'
-                                style={{ padding: '0 32px', width: '100%', backgroundColor: '#29A073' }}
+                                className='page-heading-income-button'
+                                // size='large'
                                 onClick={handleOpenCreatePayment}
                             >作成</Button>
+
                         </Col>
                     </Row>
                 </Col>
             </Row>
+           
             <TableContent
                 dataSource={paymentHistory}
                 onEdit={(item: chartType) => handleOpenEdit(item)}

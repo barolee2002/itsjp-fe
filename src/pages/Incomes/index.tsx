@@ -20,14 +20,6 @@ function Incomes() {
     const incomesList = useSelector(income)
     const [openfilter, setOpenFilter] = React.useState(false)
     const user = useSelector(userLogin)
-
-    // updateAxiosAccessToken(user.token)
-    // React.useLayoutEffect(() => {
-    //     RefeshToken()
-    //     dispatch(login())
-
-    // }, [user.token])
-    // user = useSelector(userLogin)
     const [metadata, setMetadata] = React.useState<metadata>(
         {
             totalPages: 0,
@@ -88,16 +80,16 @@ function Incomes() {
 
     return (
         <div >
-            <Row style={{ height: '64px', justifyContent: 'space-between', alignContent: 'center' }}>
-                <Col style={{ fontSize: '28px', fontWeight: 'bold' }}>所得</Col>
+            <Row className='page-heading-income'>
+                <Col className='page-heading-income-name'>所得</Col>
                 <Col span={8}>
                     <Row gutter={[12, 24]} style={{ justifyContent: 'space-between' }}>
                         <Col className='filter-container' span={12}>
                             <Button
                                 type='primary'
                                 shape='round'
-                                size='large'
-                                style={{ padding: '0 32px', width: '100%', backgroundColor: '#29A073' }}
+                                // size='large'
+                                className='page-heading-income-button'
                                 onClick={() => setOpenFilter(!openfilter)}
                             >フィルター</Button>
                             {openfilter && <Col className='filter-option' onBlur={()=> setOpenFilter(false)}>
@@ -131,8 +123,8 @@ function Incomes() {
                             <Button
                                 type='primary'
                                 shape='round'
-                                size='large'
-                                style={{ padding: '0 32px', width: '100%', backgroundColor: '#29A073' }}
+                                className='page-heading-income-button'
+                                // size='large'
                                 onClick={handleAddIncome}
                             >作成</Button>
 

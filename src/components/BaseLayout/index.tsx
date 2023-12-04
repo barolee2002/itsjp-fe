@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { userLogin } from '../../redux/selector';
 import { useDispatch } from 'react-redux';
 import { login } from '../BaseHomePage/authenSlice';
+import './style.scss'
 interface Props {
     children?: React.ReactNode
 }
@@ -14,14 +15,12 @@ export default function BaseLayout (props : Props) {
     
     return  (
         <Layout style={{height : '100%'}}>
-            <Sider style={{borderRight : '2px solid #ddd'}}>
+            <Sider width={'24%'} className='sidebar'>
                 <Sidebar />
             </Sider>
-            <Layout>
-                <Content style={{ margin : '0 57px', overflowX : 'hidden', overflowY :'auto'}}>
+                <Content style={{backgroundColor : '#fff', padding : '0 40px', overflowX : 'hidden', overflowY : 'auto'}}>
                     {props.children}
                 </Content>
-            </Layout>
         </Layout>
     )
 }

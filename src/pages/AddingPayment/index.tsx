@@ -35,7 +35,7 @@ function AddingPayment() {
     }
     return (
         <div>
-            <Row className='topic'>
+            <Row className='page-name'>
                 支出を追加
             </Row>
             <Row className='content'>
@@ -71,8 +71,9 @@ function AddingPayment() {
                 <Button
                     type='primary'
                     shape='round'
+                    
                     size='large'
-                    style={{ padding: '0 48px', backgroundColor: '#29A073' }}
+                    style={{ padding: '14px 60px', backgroundColor: '#29A073' }}
                     onClick={handleAddIncome}
                 >支出を追加</Button>
 

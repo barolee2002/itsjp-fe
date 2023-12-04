@@ -1,0 +1,62 @@
+.App {
+  height: 100%;
+}
+
+html {
+  font-family: 'Inter';
+  background-color: #fff !important;
+}
+
+.noHover {
+  pointer-events: none;
+}
+
+
+.ant-picker-input>input {
+  color: #000 !important;
+  font-size: 20px !important;
+
+}
+
+// :where(.css-dev-only-do-not-override-xu9wm8).ant-input {
+//   margin-top: 50px;
+//   background-color: #d9d9d9 !important;
+
+// }
+.ant-picker-suffix,
+.ant-picker-clear {
+  display: none !important;
+}
+
+.css-dev-only-do-not-override-xu9wm8.ant-input-disabled,
+.css-dev-only-do-not-override-xu9wm8.ant-input-affix-wrapper-disabled,
+.css-dev-only-do-not-override-xu9wm8.ant-picker.ant-picker-disabled,
+.css-dev-only-do-not-override-xu9wm8.ant-picker .ant-picker-disabled>input[disabled] {
+  cursor: auto !important;
+}
+
+input:focus {
+  outline: none;
+}
+
+.ant-table-thead {
+  color: #000;
+  font-family: 'Inter';
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.ant-table-tbody {
+  color: #000;
+  font-family: 'Inter';
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.ant-input-disabled {
+  color: #000 !important;
+}

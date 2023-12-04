@@ -1,13 +1,7 @@
 import React from 'react';
 import { Col, Row, Button } from 'antd'
 import {
-    FundOutlined,
-    SettingFilled,
-    EditOutlined,
     CaretRightFilled,
-    ProjectFilled,
-    HeartOutlined,
-    UserOutlined
 
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
@@ -16,7 +10,15 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import logo from '../../assets/logo.jpg'
 import './style.scss'
+import { createFromIconfontCN } from '@ant-design/icons';
 import { userInfor, userLogin } from '../../redux/selector';
+import dashboardIcon from '../../assets/bar-chart-2.svg'
+import incomeIcon from '../../assets/arrow-down-circle.svg'
+import spendingIcon from '../../assets/arrow-up-circle.svg'
+import planIcon from '../../assets/Edit.svg'
+import settingIcon from '../../assets/Setting_line_light.svg'
+import userIcon from '../../assets/user.svg'
+import logout from '../../assets/log-out.svg'
 type MenuItem = Required<MenuProps>['items'][number];
 function getItem(
     label: React.ReactNode,
@@ -34,53 +36,50 @@ function getItem(
     } as MenuItem;
 }
 const items: MenuItem[] = [
-    getItem('ダッシュボード', '/admin/dashboard', <HeartOutlined />),
-    getItem('所得', '/admin/incomes', <ProjectFilled rotate={180} />),
-    getItem('費用', '/admin/payments', <FundOutlined />),
-    getItem('支出計画', '/admin/payments-plan', <EditOutlined />),
-    getItem('プロフィール', '/admin/accout', <UserOutlined />)
+    getItem('ダッシュボード', '/admin/dashboard', <img  src = {dashboardIcon} alt='dashboard'/>),
+    getItem('所得', '/admin/incomes', <img src = {incomeIcon} alt='income' />),
+    getItem('費用', '/admin/payments', <img src={spendingIcon} alt='spending' />),
+    getItem('支出計画', '/admin/payments-plan', <img src={planIcon} alt = 'payment plan' />),
+    getItem('プロフィール', '/admin/accout', <img src ={userIcon} alt = 'user' />)
 ]
 
-const footerItems: MenuItem[] = [
-    getItem('Logout', 'sub7', <CaretRightFilled />),
-]
+
 export default function Sidebar() {
     const navigate = useNavigate()
     const userName = useSelector(userLogin)
     console.log(userName);
     const handleLogout = () => {
         navigate('/admin/login')
-        localStorage.setItem('userLogin' , '')
+        localStorage.setItem('userLogin', '')
     }
     return (
-        <Col style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', backgroundColor: 'rgb(244, 246, 248)', fontSize: '14px' }}>
-            <Col>
-                <Row style={{ height: '64px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <Col ><Avatar size={48} icon={<img src={logo} />} /> </Col>
-                    <Col offset={1} style={{ fontSize: '48px', textAlign: 'center' }}>MM</Col>
+        <Col className='sidebar'>
+       
+                <Row className='logo'>
+                    <Col ><Avatar size={60} icon={<img src={logo} />} /> </Col>
+                    <p className='app-name'>MM</p>
                 </Row>
-                <Row>
+                <Row style={{ height: '70%' }}>
                     <Menu
-                        style={{ backgroundColor: 'rgb(244, 246, 248)' }}
                         defaultSelectedKeys={[window.location.pathname]}
                         defaultOpenKeys={[window.location.pathname]}
                         mode="inline"
                         theme="light"
+                        className='sideber-menu'
+                        
                         items={items}
                         onClick={(e) => {
-                            console.log(e.key);
-                            
                             navigate(`${e.key}`)
                         }}
                     />
 
                 </Row>
-            </Col>
-            <Col className='user-action'>
-                <p className='username'>ウエルカム {userName.username}</p>
-                <Button icon={<CaretRightFilled />} onClick={handleLogout}>ログアウト</Button>
+                <Col className='user-action'>
+                    <p className='username'>ウエルカム {userName.username}</p>
+                    <Button className='logout-button' icon={<img src={logout} className='logout-icon' />} onClick={handleLogout}>ログアウト</Button>
 
-            </Col>
+                </Col>
+
         </Col>
     )
 }

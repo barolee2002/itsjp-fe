@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes } from './routes';
 import BaseLayout from './components/BaseLayout';
-import './App.css'
+import './App.scss'
 import { lazy, Suspense } from 'react';
 interface Props {
   children?: React.ReactNode;

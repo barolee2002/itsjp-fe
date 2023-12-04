@@ -34,7 +34,7 @@ function AddingIncome() {
     }
     return (
         <div>
-            <Row className='topic'>
+            <Row className='page-name'>
                 収入を追加
             </Row>
             <Row className='content'>
@@ -62,16 +62,15 @@ function AddingIncome() {
                     </Col>
                 </Row>
             </Row>
-            <Row className='add-button'>
                 <Button
                     type='primary'
                     shape='round'
-                    size='large'
-                    style={{ padding: '0 48px', backgroundColor: '#29A073' }}
+                    className='add-button'
+                    // size='large'
+                   
                     onClick={handleAddIncome}
                 >収入を追加</Button>
 
-            </Row>
         </div>
     )
 }

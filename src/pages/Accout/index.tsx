@@ -1,11 +1,13 @@
 import React from 'react';
-import { Col, Row, Avatar, Button, Input, DatePicker,notification  } from 'antd';
+import { Col, Row, Avatar, Button, Input, DatePicker, notification } from 'antd';
 import {
     EditOutlined,
     UserOutlined,
     MailFilled,
     KeyOutlined,
     CheckOutlined,
+    EyeOutlined,
+    EyeInvisibleOutlined
 
 } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
@@ -16,13 +18,15 @@ import './style.scss'
 import { userInfor } from '../../utils/interface/interface';
 import { updateInfor } from './accountSlice';
 import { ErrorMessage } from '../../components/ErrorMessage';
+import { ref, uploadBytes } from 'firebase/storage'
 import type { NotificationPlacement } from 'antd/es/notification/interface';
+// import {storage} from '../../firebase'
 const initstate = {
     id: 0,
     userName: '',
     fullName: '',
     address: '',
-    email :'',
+    email: '',
     avatarUrl: '',
     password: '',
     total: 0,
@@ -35,17 +39,22 @@ function Accout() {
     updateAxiosAccessToken(user.token)
     const [edit, setEdit] = React.useState(false)
     const [userInfor, setUserInfor] = React.useState<userInfor>(initstate)
-    const [newPassword, setNewPass] = React.useState ('')
+    const [newPassword, setNewPass] = React.useState('')
     const [checkNewPassword, setCheckNewPassword] = React.useState(true)
+    const [typePassword, setTypePassword] = React.useState({
+        newPassword: true,
+        confirmPassword: true
+    })
+    const [imageUpload, setImageUpload] = React.useState<any>(null)
     // const [noti, contextHolder] = notification.useNotification();
-    const openNotification = (message : string) => {
+    const openNotification = (message: string) => {
         notification.open({
-          message: `${message} `,
-          placement: 'topRight',
-          duration : 3000,
-          icon : <CheckOutlined />
+            message: `${message} `,
+            placement: 'topRight',
+            duration: 3000,
+            icon: <CheckOutlined />
         });
-      };
+    };
     React.useEffect(() => {
         const fetchData = async () => {
             const response = await axiosClient.get(`/user/${user.id}`)
@@ -63,24 +72,36 @@ function Accout() {
         })
     }
     const handleUpdate = async () => {
-        (checkNewPassword && newPassword !== '' ) && await axiosClient.put(`/user/${user.id}`,{
+        (checkNewPassword && newPassword !== '') && await axiosClient.put(`/user/${user.id}`, {
             ...userInfor
         })
-        .then(() => {
-            dispatch(updateInfor(userInfor))
-            openNotification('情報が正常に変更されました')
-        })
-        if(!(checkNewPassword && newPassword !== '' )) {
+            .then(() => {
+                dispatch(updateInfor(userInfor))
+                openNotification('情報が正常に変更されました')
+            })
+        if (!(checkNewPassword && newPassword !== '')) {
             alert('すべての情報を入力してください')
         }
     }
     const handleCheckPassword = (newPassword: string) => {
         newPassword === userInfor.password ? setCheckNewPassword(true) : setCheckNewPassword(false)
     }
-    console.log(userInfor);
-    
+    const handleHiddenPassword = (type: string, value: boolean) => {
+        setTypePassword((prev) => {
+            return {
+                ...prev,
+                [type]: value
+            }
+        })
+        // setCheckNewPassword(true)
+    }
+    // const uploadImage = () => {
+    //     if (imageUpload == null) return;
+    //     const imageRef = ref(storage, `image/${imageUpload.name + user.id}`)
+    // }
+
     return (
-        <div>
+        <div className='account'>
             <Row className='page-title'>プロフィール</Row>
             <Row className='accout-overview'>
                 <Col className='overview-title'>
@@ -131,7 +152,7 @@ function Accout() {
                         <p className='attribute'>生年月日</p>
                         <DatePicker className='infor-input' style={{ width: '100%' }} placeholder='12-2-1996' />
                     </Col> */}
-                    
+
                     <Col span={12}>
                         <p className='attribute'>メール</p>
                         <Input className='infor-input'
@@ -151,30 +172,35 @@ function Accout() {
                             <Col span={12}>
                                 <p className='attribute'>新しいパスワード</p>
                                 <Input
-                                    type='password'
+                                    type={typePassword.newPassword == true ? 'password' : 'text'}
                                     prefix={<KeyOutlined />}
                                     className='infor-input'
                                     placeholder='Nguyen Binh'
+                                    suffix={typePassword.newPassword ? <EyeOutlined onClick={() => handleHiddenPassword('newPassword', false)} /> : <EyeInvisibleOutlined onClick={() => handleHiddenPassword('newPassword', true)} />}
                                     onChange={(e) => handleChangeInfor('password', e.target.value)}
                                 ></Input>
                             </Col>
                             <Col span={12}>
                                 <p className='attribute'>パスワードを認証する</p>
                                 <Input
-                                    type='password'
+                                    type={typePassword.confirmPassword == true ? 'password' : 'text'}
+
                                     prefix={<KeyOutlined />}
                                     className='infor-input'
                                     placeholder='Nguyen Binh'
-                                    onFocus={()=>setCheckNewPassword(true)}
+                                    onFocus={() => setCheckNewPassword(true)}
+
+
                                     onChange={(e) => {
                                         setCheckNewPassword(true)
                                         setNewPass(e.target.value)
                                     }}
                                     onBlur={(e) => handleCheckPassword(e.target.value)}
+                                    suffix={typePassword.confirmPassword ? <EyeOutlined onClick={() => handleHiddenPassword('confirmPassword', false)} /> : <EyeInvisibleOutlined onClick={() => handleHiddenPassword('confirmPassword', true)} />}
                                 ></Input>
                             </Col>
                             <Col span={12} offset={12}>
-                            {!checkNewPassword&& <ErrorMessage errorText='再入力したパスワードが一致しません' />}
+                                {!checkNewPassword && <ErrorMessage errorText='再入力したパスワードが一致しません' />}
 
                             </Col>
                         </Row>

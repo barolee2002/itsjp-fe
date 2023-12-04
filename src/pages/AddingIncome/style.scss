@@ -2,24 +2,52 @@
     display: flex;
     font-size: 32px;
     font-weight: bold;
-    height : 64px;
+    height: 64px;
     align-content: center;
 
 }
+
+.page-name {
+    margin-top: 70px;
+    color: #000;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
 .input-box {
     .input-title {
-        font-size: 20px;
-        font-weight: bold;
+        color: #000;
+        font-family: Inter;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
     }
+
     .input-content {
-        padding : 8px 12px;
-        width : 100%
+        padding: 18px 44px;
+        width: 100%;
+        border-radius: 30px;
+        font-size: 18px;
     }
 }
 
 .full-width {
-    width : 100%;
+    width: 100%;
 }
+
 .add-button {
-    margin-top : 20px;
+    box-sizing: content-box;
+    margin-top: 68px;
+    padding: 14px 60px;
+    background-color: #29A073;
+    padding-inline-start: 60px !important;
+    padding-inline-end: 60px !important;
+    color: #FFF;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
 }

@@ -1,23 +1,50 @@
+
+
+.page-name {
+    margin: 0;
+    margin-top: 44px;
+    margin-bottom: 30px;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    color: #000;
+}
+
+.statistics-wrapper{
+    margin-bottom: 64px;
+}
 .Statistics-content {
-    border-radius: 8px;
-    justify-content: center;
+    border-radius: 30px;
     align-items: center;
-    padding: 36px 12px;
+    padding: 27px 37px;
+    background-color: #000;
+    opacity: 0.67;
+    color: #fff;
+
     .Statistics-icon {
         font-size: 56px;
-        padding:8px;
+        padding: 8px;
     }
+
     .Statistics-money {
         text-align: center;
         margin-top: 8px;
         font-weight: bold;
+        font-weight: 700;
+        line-height: 35px;
         font-size: 35px;
+        padding-bottom : 16px;
     }
 
     .Statistics-title {
-        font-size: 20px;
+        font-size: 30px;
+        font-weight: 600;
+        word-wrap: break-word;
+        margin-bottom: 24px;
     }
 }
+
 .chart-title {
     display: flex;
     justify-content: center;

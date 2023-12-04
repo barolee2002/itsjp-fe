@@ -29,7 +29,7 @@ interface history {
 }
 
 const chartConfig: PieConfig = {
-    // appendPadding: 10,
+    appendPadding: 10,
     data: [],
     angleField: 'value',
     colorField: 'type',
@@ -53,6 +53,7 @@ const chartConfig: PieConfig = {
             textAlign: 'center',
         }
     },
+    // legend : false
 }
 interface overview {
     incomeTotal: number,
@@ -64,18 +65,18 @@ interface chartData {
     category: string
 }
 
-const getTotal = (array : chartData[]) => {
-    let total : number = 0
+const getTotal = (array: chartData[]) => {
+    let total: number = 0
     array.map((item) => {
         total += item.amount
     })
     return total
 }
-const chartDatatype = (array : chartData[]) => {
+const chartDatatype = (array: chartData[]) => {
     return array.map((item) => {
         return {
-            type : item.category,
-            value : item.amount / getTotal(array)
+            type: item.category,
+            value: item.amount / getTotal(array)
         }
     })
 }
@@ -106,7 +107,7 @@ export default function Dashboard() {
         }
         fetchData()
     }, [])
-    
+
     const incomeChartConfig = {
         ...chartConfig,
         data: chartDatatype(income),
@@ -120,15 +121,13 @@ export default function Dashboard() {
 
     return (
         <div style={{ height: '100%' }}>
-            <Row style={{ height: '64px', fontWeight: 'bold', alignContent: 'center', fontSize: '28px' }}><p>ダッシュボード</p> </Row>
-            <Row gutter={[2, 24]} style={{ justifyContent: 'space-between' }}>
-                <Col span={20}>
-                    <Row gutter={[16, 24]}>
+            <Row className='page-heading'><p className='page-name'>ダッシュボード</p> </Row>
+            <Row gutter={[0, 24]} className='statistics-wrapper' style={{ justifyContent: 'space-between' }}>
+                <Col span={16}>
+                    <Row gutter={[40, 24]}>
                         <Col className='Statistics-box' span={8}>
-                            <Row className='Statistics-content' style={{ backgroundColor: '#ddd' }}>
-                                <Col style={{ borderRadius: '50%', backgroundColor: '#ccc', padding: '8px' }}>
-                                    <WalletOutlined className='Statistics-icon' />
-                                </Col>
+                            <Row className='Statistics-content' >
+
                                 <Col style={{ marginLeft: '8px' }}>
                                     <Row className='Statistics-title'>
                                         総合収支
@@ -140,10 +139,8 @@ export default function Dashboard() {
                             </Row>
                         </Col>
                         <Col className='Statistics-box' span={8}>
-                            <Row className='Statistics-content' style={{ backgroundColor: '#ddd' }}>
-                                <Col style={{ borderRadius: '50%', backgroundColor: '#ccc', padding: '8px' }}>
-                                    <WalletOutlined className='Statistics-icon' />
-                                </Col>
+                            <Row className='Statistics-content' >
+
                                 <Col style={{ marginLeft: '8px' }}>
                                     <Row className='Statistics-title'>
                                         総支出額
@@ -155,10 +152,8 @@ export default function Dashboard() {
                             </Row>
                         </Col>
                         <Col className='Statistics-box' span={8}>
-                            <Row className='Statistics-content' style={{ backgroundColor: '#ddd' }}>
-                                <Col style={{ borderRadius: '50%', backgroundColor: '#ccc', padding: '8px' }}>
-                                    <WalletOutlined className='Statistics-icon' />
-                                </Col>
+                            <Row className='Statistics-content' >
+
                                 <Col style={{ marginLeft: '8px' }}>
                                     <Row className='Statistics-title'>
                                         合計節約
