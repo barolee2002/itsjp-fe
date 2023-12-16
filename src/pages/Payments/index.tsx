@@ -5,9 +5,9 @@ import { getFormattedDate } from '../../utils/dateFormat';
 import { useDispatch } from 'react-redux';
 import './style.scss'
 import TableContent from '../../components/Table';
-import { chartType, metadata, pays } from '../../utils/interface/interface';
+import { chartType, metadata } from '../../utils/interface/interface';
 import { useNavigate } from 'react-router';
-import axiosClient, { updateAxiosAccessToken } from '../../api/axiosClient';
+import axiosClient from '../../api/axiosClient';
 import { spendings, userLogin } from '../../redux/selector';
 import { deleteSpending, updateSpending } from './paymentSlice';
 
@@ -16,13 +16,10 @@ function Payments() {
     const navigate = useNavigate()
     const user = useSelector(userLogin)
     const spendingList = useSelector(spendings)
-    if (user != null) {
-        updateAxiosAccessToken(user.token)
-    }
+
     const [openfilter, setOpenFilter] = React.useState(false)
 
     const [paymentHistory, setPaymentHistory] = React.useState<chartType[]>([])
-    const [paymentList, setPaymentList] = React.useState<pays[]>([])
     const [refesh, setRefesh] = React.useState(0)
     const [metadata, setMetadata] = React.useState<metadata>(
         {

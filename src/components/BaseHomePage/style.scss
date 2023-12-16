@@ -1,10 +1,12 @@
 .login {
-    margin: 52px 113px;
+    margin: 52px 143px;
     display: flex;
     flex-direction: column;
-
+    font-size: 24px;
     align-content: space-between;
-
+    .w-100 {
+        width : 100%;
+    }
     .login-input {
         display: flex;
         flex-direction: column;
@@ -24,13 +26,18 @@
             font-style: normal;
             font-weight: 800;
             line-height: normal;
-            margin-bottom: 12px;
+            margin-bottom: 60px;
+            margin-top: 0;
         }
-
+        .input-item {
+            margin-bottom: 43px;
+            width : 100%;
+        }
         .input {
             border-radius: 30px;
             padding: 12px 24px;
-            margin-top: 24px;
+            // margin-top: 24px;
+            font-size: 18px;
         }
 
         .forgot-password {
@@ -49,9 +56,9 @@
         .login-button {
             margin: 12px 0;
             padding: 12px 0;
-            font-size: 20px;
+            font-size: 24px;
             border-radius: 50px;
-            font-weight: bold;
+            font-weight: 800;
             background-color: #C8EE44;
             border: none;
         }
@@ -63,7 +70,8 @@
         .signup {
             display: flex;
             justify-content: center;
-
+            font-size: 18px;
+            font-weight: 600;
             .navigate-signup {
                 margin-left: 8px;
                 color: #78C552;

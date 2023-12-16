@@ -17,11 +17,17 @@
 
     .light {
         background-color: #fff;
+        .ant-table-cell-row-hover {
+            background-color: #fff !important;
+        }
 
     }
 
     .dark {
         background-color: #D9D9D9;
+        .ant-table-cell-row-hover {
+            background-color: #D9D9D9 !important;
+        }
     }
 
 

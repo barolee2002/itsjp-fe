@@ -12,7 +12,7 @@ import {
 } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { userLogin } from '../../redux/selector';
-import axiosClient, { updateAxiosAccessToken } from '../../api/axiosClient';
+import axiosClient from '../../api/axiosClient';
 import { useDispatch } from 'react-redux';
 import './style.scss'
 import { userInfor } from '../../utils/interface/interface';
@@ -26,6 +26,7 @@ const initstate = {
     userName: '',
     fullName: '',
     address: '',
+    birthDate :'',
     email: '',
     avatarUrl: '',
     password: '',
@@ -36,7 +37,6 @@ function Accout() {
     const dispatch = useDispatch()
     const user = useSelector(userLogin)
     const [refesh, setRefesh] = React.useState(0)
-    updateAxiosAccessToken(user.token)
     const [edit, setEdit] = React.useState(false)
     const [userInfor, setUserInfor] = React.useState<userInfor>(initstate)
     const [newPassword, setNewPass] = React.useState('')

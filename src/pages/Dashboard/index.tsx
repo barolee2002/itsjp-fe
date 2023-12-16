@@ -1,60 +1,13 @@
 import React from 'react';
 import { Row, Col, Select, Table } from 'antd';
-import { Line } from '@ant-design/charts';
-import { Pie } from '@ant-design/plots';
-import type { ColumnsType } from 'antd/es/table';
-import { PieConfig } from '@ant-design/charts'
-import {
-    WalletOutlined
-} from '@ant-design/icons';
+
 import { useDispatch, useSelector } from 'react-redux';
 import './style.scss'
-import axios from 'axios';
-import axiosClient, { updateAxiosAccessToken } from '../../api/axiosClient';
+import axiosClient from '../../api/axiosClient';
 import { userLogin } from '../../redux/selector';
-import { login } from '../../components/BaseHomePage/authenSlice';
 
 
-interface chart {
-    pay: number,
-    date: string,
-    type: string,
-}
-interface history {
-    key: number,
-    title: string,
-    type: string,
-    amount: number,
-    date: string
-}
 
-const chartConfig: PieConfig = {
-    appendPadding: 10,
-    data: [],
-    angleField: 'value',
-    colorField: 'type',
-    radius: 0.9,
-    color: ['#C8EE44', '#DE6464'],
-
-    label: {
-        type: 'inner',
-        offset: '-30%',
-        content: ({ percent }: any) => `${(percent * 100).toFixed(0)}%`,
-        style: {
-            fontSize: 20,
-            textAlign: 'center',
-        },
-    },
-    legend: {
-        layout: 'vertical',
-        position: 'bottom',
-        style: {
-            fontSize: 20,
-            textAlign: 'center',
-        }
-    },
-    // legend : false
-}
 interface overview {
     incomeTotal: number,
     spendingTotal: number,
@@ -80,8 +33,15 @@ const chartDatatype = (array: chartData[]) => {
         }
     })
 }
+const generateColors = (numCategories: number) => {
+    const colors = ['#C8EE44', '#DE6464'];
+    for (let i = 0; i < numCategories; i++) {
+        // You can use a more sophisticated color generation logic here
+        colors.push(`#${Math.floor(Math.random() * 16777215).toString(16)}`);
+    }
+    return colors;
+};
 export default function Dashboard() {
-    const dispatch = useDispatch()
     const [income, setIncome] = React.useState<chartData[]>([])
     const [spending, setSpending] = React.useState<chartData[]>([])
     const [overview, setOverview] = React.useState<overview>({
@@ -89,6 +49,8 @@ export default function Dashboard() {
         spendingTotal: 0,
         savings: 0
     })
+    const incomeColor = generateColors(income.length + 1)
+    const paymentColor = generateColors(spending.length + 1)
     const user = useSelector(userLogin)
 
     React.useEffect(() => {
@@ -108,17 +70,7 @@ export default function Dashboard() {
         fetchData()
     }, [])
 
-    const incomeChartConfig = {
-        ...chartConfig,
-        data: chartDatatype(income),
-    }
-    const payChartConfig = {
-        ...chartConfig,
-        data: chartDatatype(spending),
-    }
-
-
-
+  
     return (
         <div style={{ height: '100%' }}>
             <Row className='page-heading'><p className='page-name'>ダッシュボード</p> </Row>
@@ -169,17 +121,34 @@ export default function Dashboard() {
 
             </Row>
             <Row gutter={[16, 32]} style={{ marginTop: '12px' }}>
-                <Col span={12}>
+                <Col span={12} className='chart-item'>
                     <Row className='chart-title'>
                         総合収支
                     </Row>
-                    <Pie {...incomeChartConfig} />
+                    
+                    <div className="sub-title">
+                        {income.map((item, index) => (
+                            <Row key={index} className='sub-title-item'>
+                                <div className="color m-0" style={{ width: '28px', height: '16px', backgroundColor: `${incomeColor[index]}` }}>
+                                </div>
+                                <div className="name m-0">{item.category}</div>
+                            </Row>
+                        ))}
+                    </div>
                 </Col>
                 <Col span={12}>
                     <Row className='chart-title'>
                         総支出額
                     </Row>
-                    <Pie {...payChartConfig} />
+                    <div className="sub-title">
+                        {spending.map((item, index) => (
+                            <Row key={index} className='sub-title-item'>
+                                <div className="color m-0" style={{ width: '28px', height: '16px', backgroundColor: `${paymentColor[index]}` }}>
+                                </div>
+                                <div className="name m-0">{item.category}</div>
+                            </Row>
+                        ))}
+                    </div>
                 </Col>
             </Row>
         </div>

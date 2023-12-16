@@ -47,7 +47,6 @@ const items: MenuItem[] = [
 export default function Sidebar() {
     const navigate = useNavigate()
     const userName = useSelector(userLogin)
-    console.log(userName);
     const handleLogout = () => {
         navigate('/admin/login')
         localStorage.setItem('userLogin', '')

@@ -7,10 +7,8 @@ import './style.scss'
 import TableContent from '../../components/Table';
 import { chartType, incomes, metadata } from '../../utils/interface/interface';
 import { income, userLogin } from '../../redux/selector';
-import axiosClient, { updateAxiosAccessToken } from '../../api/axiosClient';
+import axiosClient from '../../api/axiosClient';
 import { deleteInome, updateIncomes } from './incomeSlice';
-import { login } from '../../components/BaseHomePage/authenSlice';
-import { token } from '../../utils/userLogin';
 
 function Incomes() {
     const dispatch = useDispatch()
@@ -64,6 +62,8 @@ function Incomes() {
         setIncomeHistory(() => {
             return incomesList.map((item, index) => {
                 let parseDay = new Date(item.time)
+                console.log(getFormattedDate(parseDay));
+                
                 return {
                     ...item,
                     key: item.incomeId,

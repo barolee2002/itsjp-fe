@@ -10,7 +10,7 @@ export const paymentsSlice = createSlice({
             state.spending = action.payload
         },
         deleteSpending : (state, action) => {
-            state.spending=state.spending.filter((item) => item.spendingId != action.payload)
+            state.spending=state.spending.filter((item) => item.spendingId !== action.payload)
         }
 
     },

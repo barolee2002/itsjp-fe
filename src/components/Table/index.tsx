@@ -21,6 +21,7 @@ interface Props {
 }
 const initState = {
     id: 0,
+    name :'',
     amount: 0,
     time: '',
     key: 0,
@@ -45,13 +46,14 @@ function TableContent(props: Props) {
             key: 'id',
         },
         {
-            title: 'カテゴリー',
-            dataIndex: 'category',
+            title: '名前',
+            dataIndex: 'name',
             className: 'noHover',
 
-            width: 300,
+            width: 195,
             key: 'category'
         },
+        
         {
             title: '額',
             dataIndex: 'amount',
@@ -59,7 +61,7 @@ function TableContent(props: Props) {
             className: 'noHover',
 
             key: 'amount',
-            render: (item) => <p className='m-0'>$ {item}</p>
+            render: (item : number) => <p className='m-0'>¥ {item.toLocaleString()}</p>
         },
         {
             title: '時間',
@@ -68,6 +70,14 @@ function TableContent(props: Props) {
 
             width: 195,
             key: 'date'
+        },
+        {
+            title: 'カテゴリー',
+            dataIndex: 'category',
+            className: 'noHover',
+
+            width: 195,
+            key: 'category'
         },
         {
             title: 'アクション',
