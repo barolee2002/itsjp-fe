@@ -1,82 +1,20 @@
-.topic {
-    display: flex;
-    font-size: 32px;
-    font-weight: bold;
-    height: 64px;
-    align-content: center;
-
-}
-
-.page-name {
-    margin-top: 70px;
-    color: #000;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
-}
-
-.input-box {
-    .input-title {
-        color: #000;
-        font-family: Inter;
-        font-size: 24px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 31px;
-    }
-    .m-0 {
-        margin: 0;
-    }
-    .fz-18 {
-        font-size: 18px;;
-    }
-    .prefix {
-        margin: 0;
-        font-size: 18px;
-        margin-right: 8px;
-    }
-    .ant-input-number-affix-wrapper input.ant-input-number-input {
-        padding: 0 !important;
-    }
-    .input-content {
-        padding: 18px 44px;
-        width: 100%;
-        border-radius: 30px;
-        font-size: 18px;
-    }
-    .ant-input-number-affix-wrapper {
-        // margin-top: 4px;
-        border-radius: 30px;
-    }
-    .ant-input-number {
-        
-        &-input {
-            padding: 0;
-            font-size: 18px;
-        }
-    }
-    .ant-picker-input {
-        &>input {
-            line-height: 28.218px;
-        }
-    }
-}
 
 .full-width {
-    width: 100%;
+  width: 100%;
 }
 
-.add-button {
-    box-sizing: content-box;
-    margin-top: 68px;
-    padding: 14px 60px;
-    background-color: #29A073;
-    padding-inline-start: 60px !important;
-    padding-inline-end: 60px !important;
-    color: #FFF;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
+
+.page-heading-detail-name {
+  margin-top: 97px;
+  margin-bottom: 100px;
+  color: #000;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  @media (max-height : 800px) {
+    font-size: 25px;
+    margin-top: 77px;
+    margin-bottom: 80px;
+  }
 }

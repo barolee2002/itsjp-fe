@@ -1,9 +1,8 @@
 import React from "react";
-import { Row, Col, Input, Button, DatePicker, message,InputNumber } from "antd";
+import { Row,Button, message } from "antd";
 import { useParams } from "react-router";
 import "./style.scss";
 import { Dayjs } from "dayjs";
-import dayjs from "dayjs";
 
 import axiosClient from "../../api/axiosClient";
 import { useSelector } from "react-redux";
@@ -75,7 +74,7 @@ function IncomeDetail() {
   return (
     <div>
       {contextHolder}
-      <Row className="page-name">収入を編集</Row>
+      <Row className="page-heading-detail-name">収入を編集</Row>
       <Detail detail={income} setDetail={setIncome} categories={listCategory}/>
       <Button
         type="primary"

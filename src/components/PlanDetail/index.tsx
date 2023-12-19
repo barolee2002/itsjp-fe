@@ -2,12 +2,12 @@ import React from "react";
 import { Row, Col, Input, DatePicker, InputNumber, AutoComplete } from "antd";
 import dayjs from "dayjs";
 import { Dayjs } from "dayjs";
-import { incomes, pays } from "../../utils/interface/interface";
+import {paymentsPlan } from "../../utils/interface/interface";
 import { ErrorMessage } from "../../components/ErrorMessage";
-import { changeDateFormat } from "../../utils/dateFormat";
+import { changeDateFormat, oneMonthFromDate } from "../../utils/dateFormat";
 
 interface Props {
-  detail: pays | incomes;
+  detail: paymentsPlan;
   setDetail: (prev: any) => void;
   categories: string[];
 }
@@ -94,7 +94,7 @@ export function PlanDetail({ detail, setDetail, categories }: Props) {
         </Col>
         <Col span={12} className="input-box">
           <p className="input-title">終了日</p>
-          <p className="input-content"></p>
+          <p className="input-content">{oneMonthFromDate(detail.time)}</p>
         </Col>
         <Col span={12} className="input-box">
           <p className="input-title">カテゴリー</p>

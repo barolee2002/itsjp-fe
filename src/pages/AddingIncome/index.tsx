@@ -73,7 +73,7 @@ function AddingIncome() {
   return (
     <div>
       {contextHolder}
-      <Row className="page-name">収入を追加</Row>
+      <Row className="page-heading-detail-name">収入を追加</Row>
       <Detail detail={dataPost} setDetail={setDataPost} categories={listCategory}/>
       <Button
         type="primary"

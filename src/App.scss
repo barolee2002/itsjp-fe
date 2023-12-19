@@ -3,23 +3,20 @@
 }
 
 html {
-
   background-color: #fff !important;
 }
 
 * {
-  font-family: 'Inter' !important;
+  font-family: "Inter" !important;
 }
 
 .noHover {
   pointer-events: none;
 }
 
-
-.ant-picker-input>input {
+.ant-picker-input > input {
   color: #000 !important;
   font-size: 20px !important;
-
 }
 
 // :where(.css-dev-only-do-not-override-xu9wm8).ant-input {
@@ -35,7 +32,9 @@ html {
 .css-dev-only-do-not-override-xu9wm8.ant-input-disabled,
 .css-dev-only-do-not-override-xu9wm8.ant-input-affix-wrapper-disabled,
 .css-dev-only-do-not-override-xu9wm8.ant-picker.ant-picker-disabled,
-.css-dev-only-do-not-override-xu9wm8.ant-picker .ant-picker-disabled>input[disabled] {
+.css-dev-only-do-not-override-xu9wm8.ant-picker
+  .ant-picker-disabled
+  > input[disabled] {
   cursor: auto !important;
 }
 
@@ -45,20 +44,26 @@ input:focus {
 
 .ant-table-thead {
   color: #000;
-  font-family: 'Inter';
+  font-family: "Inter";
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  @media (max-height: 800px) {
+    font-size: 20px;
+  }
 }
 
 .ant-table-tbody {
   color: #000;
-  font-family: 'Inter';
+  font-family: "Inter";
   font-size: 22px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  @media (max-height: 800px) {
+    font-size: 16px;
+  }
 }
 
 .ant-input-disabled {
@@ -66,19 +71,19 @@ input:focus {
 }
 .ant-table-cell {
   text-align: center !important;
-}.topic {
+}
+.topic {
   display: flex;
   font-size: 32px;
   font-weight: bold;
   height: 64px;
   align-content: center;
-
 }
 
 .page-name {
-  margin-top: 70px;
+  margin-top: 44px;
   color: #000;
-  font-size: 32px;
+  font-size: 30px;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
@@ -86,61 +91,97 @@ input:focus {
 
 .input-box {
   .input-title {
-      color: #000;
-      font-family: Inter;
-      font-size: 24px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: 31px;
+    color: #000;
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 31px;
   }
   .m-0 {
-      margin: 0;
+    margin: 0;
   }
-  .fz-18 {
-      font-size: 18px;;
-  }
+
   .prefix {
-      margin: 0;
-      font-size: 18px;
-      margin-right: 8px;
+    margin: 0;
+    font-size: 18px;
+    margin-right: 8px;
   }
   .ant-input-number-affix-wrapper input.ant-input-number-input {
-      padding: 0 !important;
+    padding: 0 !important;
   }
   .input-content {
-      padding: 18px 44px;
-      width: 100%;
-      border-radius: 30px;
-      font-size: 18px;
+    padding: 18px 44px;
+    width: 100%;
+    border-radius: 30px;
+    font-size: 18px;
   }
   .ant-input-number-affix-wrapper {
-      // margin-top: 4px;
-      border-radius: 30px;
+    // margin-top: 4px;
+    border-radius: 30px;
   }
   .ant-input-number {
-      
-      &-input {
-          padding: 0;
-          font-size: 18px;
-      }
+    &-input {
+      padding: 0;
+      font-size: 18px;
+    }
   }
   .ant-picker-input {
-      &>input {
-          line-height: 28.218px;
-      }
+    & > input {
+      line-height: 28.218px;
+    }
   }
   .input-selection {
     width: 100%;
     .ant-select-selector {
       padding: 32.1px;
       font-size: 18px;
-      border-radius : 30px;
-      .ant-select-selection-search-input{
+      border-radius: 30px;
+      .ant-select-selection-search-input {
         font-size: 18px;
         padding-left: 30px;
       }
-      .ant-select-selection-placeholder{
+      .ant-select-selection-placeholder {
         margin-left: 8px;
+      }
+    }
+  }
+  @media (max-height: 800px) {
+    .input-title {
+      font-size: 19px;
+      line-height: 24px;
+      margin: 15px 0;
+    }
+    .prefix {
+      font-size: 14px;
+    }
+    .input-content {
+      padding: 12px 32px;
+      font-size: 14px;
+    }
+    .ant-picker-input {
+      & > input {
+        line-height: 20px;
+        font-size: 14px !important;
+      }
+    }
+    .ant-input-number {
+      &-input {
+        font-size: 14px;
+      }
+    }
+    .input-selection {
+      .ant-select-selector {
+        padding: 22px;
+        font-size: 14px;
+        border-radius: 30px;
+        .ant-select-selection-search-input {
+          font-size: 14px;
+          padding-left: 24px;
+        }
+        .ant-select-selection-placeholder {
+          margin-left: 8px;
+        }
       }
     }
   }
@@ -154,12 +195,43 @@ input:focus {
   box-sizing: content-box;
   margin-top: 68px;
   padding: 14px 60px;
-  background-color: #29A073;
+  background-color: #29a073;
   padding-inline-start: 60px !important;
   padding-inline-end: 60px !important;
-  color: #FFF;
+  color: #fff;
   font-size: 24px;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
+  @media (max-height: 800px) {
+    margin-top: 54px;
+    font-size: 16px;
+    padding: 8px 48px;
+    line-height: 20px;
+    padding-inline-start: 48px !important;
+    padding-inline-end: 48px !important;
+  }
+}
+.css-l0h214-MuiResponsiveChart-container {
+  // width: 100% !important;
+  height: 400px !important;
+  justify-content: center !important;
+  .css-yhscwp-MuiChartsSurface-root {
+    & > g {
+      // width: 600px;
+      // height : 600px
+    }
+  }
+}
+@media (max-height: 800px) {
+  .page-name {
+    margin-top: 35px;
+    font-size: 25px;
+  }
+  .css-l0h214-MuiResponsiveChart-container {
+    height: 250px !important;
+  }
+}
+.ant-message-notice-content span{
+  font-size: 16px !important;
 }

@@ -1,34 +1,19 @@
 import React from "react";
 import {
   Row,
-  Col,
-  Input,
   Button,
-  DatePicker,
   message,
-  InputNumber,
 } from "antd";
-import dayjs from "dayjs";
 import { useParams } from "react-router";
 import axiosClient from "../../api/axiosClient";
 import "./style.scss";
 import { useNavigate } from "react-router";
-import { Dayjs } from "dayjs";
 import { NoticeType } from "antd/es/message/interface";
 import { pays } from "../../utils/interface/interface";
-import { ErrorMessage } from "../../components/ErrorMessage";
 import { Detail } from "../../components/IncomeSpendingDetail";
 import { useSelector } from "react-redux";
 import { userLogin } from "../../redux/selector";
-const initState = {
-  spendingId: 0,
-  name: "",
-  amount: 0,
-  time: "",
-  userId: 0,
-  category: "",
-  key: 0,
-};
+const initState = {} as pays;
 function PaymentDetail() {
   const navigate = useNavigate();
   const param = useParams();
@@ -74,7 +59,7 @@ function PaymentDetail() {
   return (
     <div>
       {contextHolder}
-      <Row className="page-name">収入を編集</Row>
+      <Row className="page-heading-detail-name">計画を編集</Row>
       <Detail detail={spending} setDetail={setSpending} categories={listCategory}/>
       <Button
         type="primary"

@@ -89,4 +89,35 @@
         }
 
     }
+    @media (max-height : 800px) {
+        .logo{
+            font-size: 56px;
+            margin-top: 26px;
+            margin-bottom: 20px;
+            .app-name {
+                font-size: 56px;
+            }
+        }
+        .sideber-menu {
+            font-size: 16px;
+        }
+        .menu-icon {
+            height : 28px;
+            width: 28px;
+        }
+        .user-action {
+            font-size: 16px;
+            margin-bottom: 42px;
+            .username{
+                margin-bottom: 60px;
+            }
+            .logout-button{
+                font-size: 16px;
+            }
+        }
+        .ant-menu-item{
+            height: 48px !important;
+        }
+        
+    }
 }

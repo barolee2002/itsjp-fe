@@ -36,11 +36,11 @@ function getItem(
     } as MenuItem;
 }
 const items: MenuItem[] = [
-    getItem('ダッシュボード', '/admin/dashboard', <img  src = {dashboardIcon} alt='dashboard'/>),
-    getItem('所得', '/admin/incomes', <img src = {incomeIcon} alt='income' />),
-    getItem('費用', '/admin/payments', <img src={spendingIcon} alt='spending' />),
-    getItem('支出計画', '/admin/payments-plan', <img src={planIcon} alt = 'payment plan' />),
-    getItem('プロフィール', '/admin/accout', <img src ={userIcon} alt = 'user' />)
+    getItem('ダッシュボード', '/admin/dashboard', <img className='menu-icon'  src = {dashboardIcon} alt='dashboard'/>),
+    getItem('所得', '/admin/incomes', <img className='menu-icon' src = {incomeIcon} alt='income' />),
+    getItem('費用', '/admin/payments', <img className='menu-icon' src={spendingIcon} alt='spending' />),
+    getItem('支出計画', '/admin/payments-plan', <img className='menu-icon' src={planIcon} alt = 'payment plan' />),
+    getItem('プロフィール', '/admin/accout', <img className='menu-icon' src ={userIcon} alt = 'user' />)
 ]
 
 

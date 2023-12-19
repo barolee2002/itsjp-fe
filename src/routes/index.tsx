@@ -11,6 +11,8 @@ import HomePage from '../pages/Home';
 import Login from '../pages/Login';
 import SignUp from '../pages/Signup';
 import Accout from '../pages/Accout';
+import PaymentPlanDetail from '../pages/PaymentPLanDetail';
+import CreatePlan from '../pages/CreatePlan';
 interface RouteConfig {
     path: string;
     component: React.ComponentType;
@@ -28,7 +30,10 @@ const publicRoutes : RouteConfig[] =[
     {path : '/admin/payments/create', component :AddingPayment},
     {path : '/admin/payments/:id',component : PaymentDetail},
     {path : '/admin/payments-plan',component : PaymentPlans},
-    {path : '/admin/accout', component :Accout}
+    {path : '/admin/payments-plan/:id',component : PaymentPlanDetail},
+    {path : '/admin/payments-plan/create',component : CreatePlan},
+    {path : '/admin/accout', component :Accout},
+
     
 
 

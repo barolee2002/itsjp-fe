@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, message, Col, Button, Table } from "antd";
+import { Row, message, Col, Button, Table, Modal } from "antd";
 import { metadata, paymentsPlan } from "../../utils/interface/interface";
 import { useDispatch, useSelector } from "react-redux";
 import { NoticeType } from "antd/es/message/interface";
@@ -7,12 +7,19 @@ import { plan, userLogin } from "../../redux/selector";
 import axiosClient from "../../api/axiosClient";
 import type { ColumnsType } from "antd/es/table";
 import deleteIcon from "../../assets/trash-2.svg";
+import { useNavigate } from "react-router";
 import editIcon from "../../assets/editRow.svg";
 import "./style.scss";
-import { updatePlan } from "./planSlice";
+import { deleteItemPlan, updatePlan } from "./planSlice";
+import {
+  changeDateFormat,
+  getFormattedDate,
+  oneMonthFromDate,
+} from "../../utils/dateFormat";
 const initState = {} as paymentsPlan;
 
 function PaymentPlans() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [planHistory, setPlanHistory] = React.useState<paymentsPlan[]>([]);
   const [refesh, setRefesh] = React.useState(0);
@@ -23,6 +30,9 @@ function PaymentPlans() {
   const [itemDelete, setItemDelete] = React.useState<paymentsPlan>(initState);
   const showModal = () => {
     setOpen(true);
+  };
+  const handleCancel = () => {
+    setOpen(false);
   };
 
   const [metadata, setMetadata] = React.useState<metadata>({
@@ -38,8 +48,13 @@ function PaymentPlans() {
       content: `${error}`,
     });
   };
-  const handleOpenEdit = (item: paymentsPlan) => {};
-
+  const handleOpenEdit = (item: paymentsPlan) => {
+    navigate(`${item.plannerId}`);
+  };
+  const handleDelete = () => {
+    axiosClient.delete(`plan/${itemDelete.plannerId}`);
+    dispatch(deleteItemPlan(itemDelete.key));
+  };
   React.useEffect(() => {
     const fetchData = async () => {
       const response = await axiosClient.get(`/plan/${user.id}`);
@@ -53,6 +68,7 @@ function PaymentPlans() {
     };
     fetchData();
   }, [refesh]);
+
   const columns: ColumnsType<paymentsPlan> = React.useMemo(
     () => [
       {
@@ -67,7 +83,7 @@ function PaymentPlans() {
         dataIndex: "name",
         className: "noHover",
 
-        width: 195,
+        width: 160,
         key: "category",
       },
       {
@@ -75,13 +91,24 @@ function PaymentPlans() {
         dataIndex: "category",
         className: "noHover",
 
-        width: 195,
+        width: 160,
         key: "category",
       },
       {
         title: "額",
         dataIndex: "amount",
-        width: 195,
+        width: 160,
+        className: "noHover",
+
+        key: "amount",
+        render: (item: number) => (
+          <p className="m-0">¥ {item.toLocaleString()}</p>
+        ),
+      },
+      {
+        title: "残る",
+        dataIndex: "spentMoney",
+        width: 160,
         className: "noHover",
 
         key: "amount",
@@ -91,11 +118,11 @@ function PaymentPlans() {
       },
       {
         title: "時間",
-        dataIndex: "date",
+        dataIndex: "time",
         className: "noHover",
 
-        width: 195,
-        key: "date",
+        width: 160,
+        key: "time",
       },
 
       {
@@ -103,21 +130,21 @@ function PaymentPlans() {
         className: "noHover",
         width: 125,
         key: "id",
-        render: (item : paymentsPlan) => (
+        render: (item: paymentsPlan) => (
           <p className="m-0">
             <Button
               onMouseOver={() => {}}
               className={
                 item.id % 2 === 0 ? "action-button light" : "action-button dark"
               }
-              icon={<img src={editIcon} />}
+              icon={<img className="button-icon" src={editIcon} alt="icon" />}
               onClick={() => handleOpenEdit(item)}
             />
             <Button
               className={
                 item.id % 2 === 0 ? "action-button light" : "action-button dark"
               }
-              icon={<img src={deleteIcon} />}
+              icon={<img className="button-icon" src={deleteIcon} alt="icon" />}
               onClick={() => {
                 setItemDelete(item);
                 showModal();
@@ -130,20 +157,54 @@ function PaymentPlans() {
     []
   );
   React.useEffect(() => {
-    setPlanHistory(() => {
-      return spendingPlan.map((item, index) => {
-        return {
-          ...item,
-          id: index + 1,
-          key: item.plannerId,
-          plannerId: item.plannerId,
-          time: item.time,
-          amount: item.amount,
-        };
+    const fetchDataForItem = async (item: paymentsPlan) => {
+      const fromDate = item.time;
+      const toDate = changeDateFormat(oneMonthFromDate(item.time));
+
+      const response = await axiosClient.get(`spending/${user.id}`, {
+        params: {
+          fromDate: fromDate,
+          toDate: toDate,
+          category: item.category,
+        },
       });
-    });
+
+      let totalMoney = 0;
+      response.data.data?.map((planItem: paymentsPlan) => {
+        totalMoney += planItem.amount;
+      });
+
+      console.log(totalMoney);
+      return totalMoney;
+    };
+
+    const updatePlanHistory = async () => {
+      const updatedPlanHistory = await Promise.all(
+        spendingPlan.map(async (item, index) => {
+          const newDate = new Date(item.time);
+          const spentMoney = await fetchDataForItem(item);
+
+          return {
+            ...item,
+            id: index + 1,
+            key: item.plannerId,
+            spentMoney: spentMoney,
+            plannerId: item.plannerId,
+            time: getFormattedDate(newDate),
+            amount: item.amount,
+          };
+        })
+      );
+
+      setPlanHistory(updatedPlanHistory);
+    };
+
+    updatePlanHistory();
   }, [paymentPlan]);
-  const handleAddplan = () => {};
+
+  const handleAddplan = () => {
+    navigate("create");
+  };
   return (
     <div>
       {contextHolder}
@@ -191,6 +252,32 @@ function PaymentPlans() {
           }}
         />
       </Row>
+      <Modal
+        open={open}
+        // onOk={() => {
+        //   handleDelete();
+        //   handleCancel();
+        // }}
+        // onCancel={handleCancel}
+        footer={(_, { OkBtn, CancelBtn }) => (
+          <div className="modal-footer">
+            <button
+              className="delete-btn"
+              onClick={() => {
+                handleDelete();
+                handleCancel();
+              }}
+            >
+              削除
+            </button>
+            <button className="cancel-btn" onClick={handleCancel}>
+              キャンセル
+            </button>
+          </div>
+        )}
+      >
+        <p>消去してもよろしいですか？</p>
+      </Modal>
     </div>
   );
 }

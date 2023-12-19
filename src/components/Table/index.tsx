@@ -2,10 +2,7 @@ import React from 'react';
 import { Table, Pagination, Row, Button, Modal } from 'antd';
 
 import type { ColumnsType } from 'antd/es/table';
-import {
-    EditFilled,
-    DeleteOutlined
-} from '@ant-design/icons';
+
 import './style.scss'
 import { chartType, metadata } from '../../utils/interface/interface';
 import deleteIcon from '../../assets/trash-2.svg'
@@ -85,8 +82,8 @@ function TableContent(props: Props) {
             width: 125,
             key: 'id',
             render: (item) => <p className='m-0'>
-                <Button onMouseOver={() => { }} className={item.id % 2 === 0 ? 'action-button light' : 'action-button dark'} icon={<img src={editIcon} />} onClick={() => onEdit(item)} />
-                <Button className={item.id % 2 === 0 ? 'action-button light' : 'action-button dark'} icon={<img src={deleteIcon} />} onClick={() => {
+                <Button onMouseOver={() => { }} className={item.id % 2 === 0 ? 'action-button light' : 'action-button dark'} icon={<img className='button-icon' src={editIcon} alt='icon'/>} onClick={() => onEdit(item)} />
+                <Button className={item.id % 2 === 0 ? 'action-button light' : 'action-button dark'} icon={<img className='button-icon' src={deleteIcon}  alt='icon'/>} onClick={() => {
 
                     setItemDelete(item)
                     showModal()
@@ -125,19 +122,22 @@ function TableContent(props: Props) {
             </Row> */}
             <Modal
                 open={open}
-                onOk={() => {
-                    onDelete(itemDelete)
-                    handleCancel()
-                }}
-                onCancel={handleCancel}
+                // onOk={() => {
+                //     onDelete(itemDelete)
+                //     handleCancel()
+                // }}
+                // onCancel={handleCancel}
                 footer={(_, { OkBtn, CancelBtn }) => (
-                    <>
-                        <CancelBtn />
-                        <OkBtn />
-                    </>
+                    <div className="modal-footer">
+                        <button className='delete-btn' onClick={() =>{
+                            onDelete(itemDelete)
+                            handleCancel()
+                        }}>削除</button>
+                        <button className='cancel-btn' onClick={handleCancel}>キャンセル</button>
+                    </div>
                 )}
             >
-                <p>消去してもよろしいですか？</p>
+                <p>消去してもよろしいですか ?</p>
             </Modal>
         </div>
     )

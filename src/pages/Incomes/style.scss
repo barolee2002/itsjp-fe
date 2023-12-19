@@ -31,8 +31,11 @@ ant-table-cell-row-hover {
     width: 600px;
     z-index: 1;
     padding: 16px;
-
     border-radius: 20px;
+    @media (max-height : 800px) {
+        padding: 10px;
+        
+    }
 }
 
 .text-center {
@@ -47,6 +50,7 @@ ant-table-cell-row-hover {
     margin-bottom: 52px;
 
     &-name {
+        margin-top: 0;
         color: #000;
         font-family: 'Inter';
         font-size: 32px;
@@ -66,6 +70,20 @@ ant-table-cell-row-hover {
         font-style: normal;
         font-weight: 800;
         line-height: normal;
+    }
+    @media (max-height : 800px) {
+        margin-top: 56px;
+        margin-bottom: 36px;
+        &-name {
+            font-size: 25px;
+
+        }
+        &-button {
+            font-size: 19px;
+            padding : 8px 16px;
+            line-height: 19px;
+
+        }
     }
 }
 

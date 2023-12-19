@@ -1,41 +1,36 @@
 import React from "react";
-import {
-  Row,
-  Button,
-  message,
-} from "antd";
+import { Row, Button, message } from "antd";
 import { useSelector } from "react-redux";
 import axiosClient from "../../api/axiosClient";
 import { NoticeType } from "antd/es/message/interface";
-import "./style.scss";
 import { userLogin } from "../../redux/selector";
 import { useNavigate } from "react-router";
-import { pays } from "../../utils/interface/interface";
-import { Detail } from "../../components/IncomeSpendingDetail";
-const initState = {} as pays;
-function AddingPayment() {
+import { paymentsPlan } from "../../utils/interface/interface";
+import { PlanDetail } from "../../components/PlanDetail";
+const initState = {} as paymentsPlan;
+function CreatePlan() {
   const navigate = useNavigate();
   const user = useSelector(userLogin);
-  const [listCategory, setListCategory] = React.useState<string[]>([])
+  const [listCategory, setListCategory] = React.useState<string[]>([]);
   const [messageApi, contextHolder] = message.useMessage();
-  const [dataPost, setDataPost] = React.useState<pays>(initState);
+  const [dataPost, setDataPost] = React.useState<paymentsPlan>(initState);
   const errorMessage = (typeMess: NoticeType, error: string) => {
     messageApi.open({
       type: `${typeMess}`,
       content: `${error}`,
     });
   };
-  const handleAddIncome = async () => {
+  const handleAddPlan = async () => {
     dataPost.amount !== undefined &&
       dataPost.time !== undefined &&
       dataPost.category !== undefined &&
       (await axiosClient
-        .post("/spending", {
+        .post("/plan", {
           ...dataPost,
           userId: user.id,
         })
         .then(() => {
-          navigate("/admin/payments");
+          navigate("/admin/payments-plan");
         })
         .catch((err) => console.log(err)));
     if (
@@ -45,31 +40,34 @@ function AddingPayment() {
         dataPost.category !== undefined
       )
     ) {
-        errorMessage( "error","すべての情報を入力してください");
+      errorMessage("error", "すべての情報を入力してください");
     }
   };
   React.useEffect(() => {
-    const getListCategory = async() => {
-        try {
-            const response = await axiosClient.get(`plan/${user.id}/category`)
-            setListCategory(response.data)
-        } catch(err) {
-            console.log(err);
-            
-        }
-    }
-    getListCategory()
-  },[])
+    const getListCategory = async () => {
+      try {
+        const response = await axiosClient.get(`plan/${user.id}/category`);
+        setListCategory(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getListCategory();
+  }, []);
   return (
     <div>
       {contextHolder}
-      <Row className="page-heading-detail-name">支出を追加</Row>
-      <Detail detail={dataPost} setDetail={setDataPost} categories={listCategory}/>
+      <Row className="page-heading-detail-name">計画を追加</Row>
+      <PlanDetail
+        detail={dataPost}
+        setDetail={setDataPost}
+        categories={listCategory}
+      />
       <Button
         type="primary"
         shape="round"
         className="add-button"
-        onClick={handleAddIncome}
+        onClick={handleAddPlan}
       >
         支出を追加
       </Button>
@@ -77,4 +75,4 @@ function AddingPayment() {
   );
 }
 
-export default AddingPayment;
+export default CreatePlan;

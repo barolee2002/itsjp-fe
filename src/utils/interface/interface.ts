@@ -28,6 +28,7 @@ export type paymentsPlan = {
   plannerId: number;
   name: string;
   category : string,
+  spentMoney : number;
   amount: number;
   key: number;
   userId: number;
@@ -40,7 +41,7 @@ export type userInfor = {
   birthDate: string;
   address: string;
   email: string;
-  avatarUrl: string;
+  avatarUrl: ArrayBuffer | Uint8Array;
   password: string;
   total: number;
 };

@@ -11,9 +11,7 @@ interface Props {
   setDetail: (prev: any) => void;
   categories: string[];
 }
-interface categoriesProp {
-  value: string;
-}
+
 const setListCategory = (categories : string[]) => {
     return categories?.map((category) => {
       return {

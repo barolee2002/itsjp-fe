@@ -81,4 +81,40 @@
             }
         }
     }
+    @media (max-height : 800px) {
+        margin: 42px 124px;
+        .login-input {
+            margin-top: 59px;
+            .title {
+                font-size: 32px;
+                margin-bottom: 48px;
+            }
+            .input-item {
+                margin-bottom: 34px;
+            }
+            .input {
+                padding: 9px 19px;
+                font-size: 14px;
+            }
+    
+            .forgot-password {
+                margin-top: 6px;
+            }
+        }
+    
+        .login-action {
+            .login-button {
+                margin: 8px 0;
+                padding: 8px 0;
+                font-size: 19px;
+            }
+    
+            .signup {
+                font-size: 14px;
+            }
+        }
+        .mt-124{
+            margin-top: 44px;
+        }
+    }
 }

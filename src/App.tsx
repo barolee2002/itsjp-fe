@@ -3,19 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes } from './routes';
 import BaseLayout from './components/BaseLayout';
 import './App.scss'
-import { lazy, Suspense } from 'react';
 interface Props {
   children?: React.ReactNode;
 }
 
 
-// import Loader from 'shareComponent/Loader';
-// import ProtectedRoutes from './routes/protectedRoutes'; //Authenticated routes
-// import PublicRoute from './routes/publicRoutes';
-// import PrivateRoute from './routes/privateRoutes';
-const Login = lazy(() => import('./pages/Login'))
-const SignUp = lazy(() => import('./pages/Signup'))
-const HomePage = lazy(() => import('./pages/Home'))
 export default function App() {
     const userLogin = localStorage.getItem('userLogin');
     let isAuthenticated = false

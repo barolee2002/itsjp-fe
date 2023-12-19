@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getFormattedDate } from '../../utils/dateFormat';
 import './style.scss'
 import TableContent from '../../components/Table';
-import { chartType, incomes, metadata } from '../../utils/interface/interface';
+import { chartType, metadata } from '../../utils/interface/interface';
 import { income, userLogin } from '../../redux/selector';
 import axiosClient from '../../api/axiosClient';
 import { deleteInome, updateIncomes } from './incomeSlice';
@@ -88,7 +88,6 @@ function Incomes() {
                             <Button
                                 type='primary'
                                 shape='round'
-                                // size='large'
                                 className='page-heading-income-button'
                                 onClick={() => setOpenFilter(!openfilter)}
                             >フィルター</Button>

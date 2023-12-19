@@ -1,41 +1,25 @@
 import React from "react";
 import {
   Row,
-  Col,
-  Input,
   Button,
-  DatePicker,
   message,
-  InputNumber,
 } from "antd";
-import dayjs from "dayjs";
 import { useParams } from "react-router";
 import axiosClient from "../../api/axiosClient";
-import "./style.scss";
 import { useNavigate } from "react-router";
-import { Dayjs } from "dayjs";
 import { NoticeType } from "antd/es/message/interface";
-import { pays } from "../../utils/interface/interface";
-import { ErrorMessage } from "../../components/ErrorMessage";
-import { Detail } from "../../components/IncomeSpendingDetail";
+import { paymentsPlan, pays } from "../../utils/interface/interface";
 import { useSelector } from "react-redux";
 import { userLogin } from "../../redux/selector";
-const initState = {
-  spendingId: 0,
-  name: "",
-  amount: 0,
-  time: "",
-  userId: 0,
-  category: "",
-  key: 0,
-};
-function PaymentDetail() {
+import { PlanDetail } from "../../components/PlanDetail";
+const initState = {} as paymentsPlan
+function PaymentPlanDetail() {
   const navigate = useNavigate();
   const param = useParams();
   const user = useSelector(userLogin)
   const [messageApi, contextHolder] = message.useMessage();
   const [listCategory, setListCategory] = React.useState<string[]>([])
-  const [spending, setSpending] = React.useState<pays>(initState);
+  const [plan, setPlan] = React.useState<paymentsPlan>(initState);
   const errorMessage = (typeMess: NoticeType, error: string) => {
     messageApi.open({
       type: `${typeMess}`,
@@ -44,19 +28,19 @@ function PaymentDetail() {
   };
   React.useEffect(() => {
     const fetchData = async () => {
-      const response = await axiosClient.get(`/spending/detail/${param.id}`);
-      setSpending(response.data);
+      const response = await axiosClient.get(`/plan/detail/${param.id}`);
+      setPlan(response.data);
     };
     fetchData();
   }, [param.id]);
 
-  const handleAddSpending = async () => {
-    const update = axiosClient.put(`spending/${spending.spendingId}`, {
-      ...spending,
+  const handleUpdatePlan = async () => {
+    const update = axiosClient.put(`plan/${plan.plannerId}`, {
+      ...plan,
     });
     update.then(() => {
       errorMessage("success", "更新成功");
-      navigate("/admin/payments");
+      navigate("/admin/payments-plan");
     });
   };
   React.useEffect(() => {
@@ -74,13 +58,13 @@ function PaymentDetail() {
   return (
     <div>
       {contextHolder}
-      <Row className="page-name">収入を編集</Row>
-      <Detail detail={spending} setDetail={setSpending} categories={listCategory}/>
+      <Row className="page-heading-detail-name">計画を追加</Row>
+      <PlanDetail detail={plan} setDetail={setPlan} categories={listCategory} />
       <Button
         type="primary"
         shape="round"
         className="add-button"
-        onClick={handleAddSpending}
+        onClick={handleUpdatePlan}
       >
         アップデート
       </Button>
@@ -88,4 +72,4 @@ function PaymentDetail() {
   );
 }
 
-export default PaymentDetail;
+export default PaymentPlanDetail;
