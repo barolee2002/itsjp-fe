@@ -84,41 +84,8 @@ function Incomes() {
                 <Col className='page-heading-income-name'>所得</Col>
                 <Col span={8}>
                     <Row gutter={[12, 24]} style={{ justifyContent: 'space-between' }}>
-                        <Col className='filter-container' span={12}>
-                            <Button
-                                type='primary'
-                                shape='round'
-                                className='page-heading-income-button'
-                                onClick={() => setOpenFilter(!openfilter)}
-                            >フィルター</Button>
-                            {openfilter && <Col className='filter-option' onBlur={()=> setOpenFilter(false)}>
-                                <Row className='filter'>
-                                    <Row gutter={12} className='filter-row'>
-                                        <p className='text-center'>金額でフィルタリングする</p>
-                                        <Col>
-                                            <Input 
-                                            placeholder='から。。。' />
-                                        </Col>
-                                        <Col>
-                                            <Input placeholder='まで。。。' />
-                                        </Col>
-                                    </Row>
-                                    <Row gutter={12} className='filter-row'>
-                                        <p className='text-center'>日付でフィルタリングする</p>
-                                        <Col>
-                                            <Input placeholder='から。。。' />
-                                        </Col>
-                                        <Col>
-                                            <Input placeholder='まで。。。' />
-                                        </Col>
-                                    </Row>
-                                    <Row gutter={12} className='filter-row'>
-                                        <Button >フィルタリング</Button>
-                                    </Row>
-                                </Row>
-                            </Col>}
-                        </Col>
-                        <Col span={12}>
+                        
+                        <Col span={12} offset={12}>
                             <Button
                                 type='primary'
                                 shape='round'

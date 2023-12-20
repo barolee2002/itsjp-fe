@@ -214,16 +214,8 @@ function PaymentPlans() {
       >
         <Col span={8} style={{ float: "right" }}>
           <Row gutter={[12, 24]} style={{ justifyContent: "space-between" }}>
-            <Col className="filter-container" span={12}>
-              <Button
-                type="primary"
-                shape="round"
-                className="page-heading-income-button"
-              >
-                フィルター
-              </Button>
-            </Col>
-            <Col span={12}>
+            
+            <Col span={12} offset={12}>
               <Button
                 type="primary"
                 shape="round"

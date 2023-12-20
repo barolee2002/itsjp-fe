@@ -136,6 +136,7 @@ function Accout() {
         .then(() => {
           dispatch(updateInfor(userInfor));
           errorMessage("success", "情報が正常に変更されました");
+          setEdit(false)
         }));
     if (!(checkNewPassword && newPassword !== "")) {
       errorMessage("error", "すべての情報を入力してください");
