@@ -37,7 +37,7 @@ function getItem(
 }
 const items: MenuItem[] = [
     getItem('ダッシュボード', '/admin/dashboard', <img className='menu-icon'  src = {dashboardIcon} alt='dashboard'/>),
-    getItem('所得', '/admin/incomes', <img className='menu-icon' src = {incomeIcon} alt='income' />),
+    getItem('収入', '/admin/incomes', <img className='menu-icon' src = {incomeIcon} alt='income' />),
     getItem('費用', '/admin/payments', <img className='menu-icon' src={spendingIcon} alt='spending' />),
     getItem('支出計画', '/admin/payments-plan', <img className='menu-icon' src={planIcon} alt = 'payment plan' />),
     getItem('プロフィール', '/admin/accout', <img className='menu-icon' src ={userIcon} alt = 'user' />)
