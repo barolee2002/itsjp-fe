@@ -12,12 +12,12 @@ interface Props {
   categories: string[];
 }
 
-const setListCategory = (categories : string[]) => {
-    return categories?.map((category) => {
-      return {
-        value: category,
-      };
-    });
+const setListCategory = (categories: string[]) => {
+  return categories?.map((category) => {
+    return {
+      value: category,
+    };
+  });
 };
 export function Detail({ detail, setDetail, categories }: Props) {
   const [checkValidNumber, setCheckNumer] = React.useState(true);
@@ -34,7 +34,7 @@ export function Detail({ detail, setDetail, categories }: Props) {
     <Row className="content">
       <Row gutter={[72, 0]} className="full-width">
         <Col span={12} className="input-box">
-          <p className="input-title">名前</p>
+          <p className="input-title">名</p>
           <Input
             className="input-content"
             placeholder="給料"
@@ -50,7 +50,7 @@ export function Detail({ detail, setDetail, categories }: Props) {
           />
         </Col>
         <Col span={12} className="input-box">
-          <p className="input-title">額</p>
+          <p className="input-title">金額</p>
           <InputNumber
             className="input-content"
             formatter={(value) =>
@@ -71,6 +71,16 @@ export function Detail({ detail, setDetail, categories }: Props) {
                     amount: parseInt(value),
                   };
                 });
+                for (let i = 0; i < value.length; i++) {
+                  if (value[i] < '0' || value[i] > '9') {
+                    setDetail((prev: any) => {
+                      return {
+                        ...prev,
+                        amount: prev.amount,
+                      };
+                    });
+                  }
+                }
               }
             }}
             //   }}
@@ -81,7 +91,7 @@ export function Detail({ detail, setDetail, categories }: Props) {
           )}
         </Col>
         <Col span={12} className="input-box">
-          <p className="input-title">時間</p>
+          <p className="input-title">日付</p>
           <DatePicker
             className="input-content"
             onChange={(date, dateString) => {

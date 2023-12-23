@@ -32,7 +32,7 @@ const getTotal = (array: chartData[]) => {
 };
 const chartDatatype = (array: chartData[]) => {
   const sortArray = array.sort((a, b) => b.amount - a.amount);
-  if (sortArray.length > 3) {
+  if (sortArray.length > 2) {
     return [
       sortArray[0],
       sortArray[1],
@@ -88,6 +88,8 @@ export default function Dashboard() {
         const spendingResponse = await axiosClient.get(
           `/spending/${user.id}/statistic`
         );
+        console.log(spendingResponse);
+        
         setSpending(spendingResponse.data);
       } catch (err) {
         console.log(err);
@@ -109,7 +111,7 @@ export default function Dashboard() {
     return `${(percent * 100).toFixed(0)}%`;
   };
   const getArcLabelSpending = (params: DefaultizedPieValueType) => {
-    const percent = params.value / getTotal(income);
+    const percent = params.value / getTotal(spending);
     return `${(percent * 100).toFixed(0)}%`;
   };
   React.useEffect(() => {
@@ -138,7 +140,7 @@ export default function Dashboard() {
           <Col className="Statistics-box">
             <Row className="Statistics-content">
               <Col style={{ marginLeft: "8px" }}>
-                <Row className="Statistics-title">総合収支</Row>
+                <Row className="Statistics-title">収入合計</Row>
                 <Row className="Statistics-money">
                   ¥ {overview?.incomeTotal.toLocaleString()}
                 </Row>
@@ -148,7 +150,7 @@ export default function Dashboard() {
           <Col className="Statistics-box">
             <Row className="Statistics-content">
               <Col style={{ marginLeft: "8px" }}>
-                <Row className="Statistics-title">総支出額</Row>
+                <Row className="Statistics-title">支出合計</Row>
                 <Row className="Statistics-money">
                   ¥ {overview?.spendingTotal.toLocaleString()}
                 </Row>
@@ -158,7 +160,7 @@ export default function Dashboard() {
           <Col className="Statistics-box">
             <Row className="Statistics-content">
               <Col style={{ marginLeft: "8px" }}>
-                <Row className="Statistics-title">合計節約</Row>
+                <Row className="Statistics-title">収支合計</Row>
                 <Row className="Statistics-money">
                   ¥ {overview?.savings.toLocaleString()}
                 </Row>
@@ -169,7 +171,7 @@ export default function Dashboard() {
       </Col>
       <Row gutter={[16, 32]} className="chart-wrapper">
         <Col span={12} className="chart-item">
-          <Row className="chart-title">総合収支</Row>
+          <Row className="chart-title">収入分析</Row>
           <PieChart
             colors={colors}
             series={[
@@ -205,7 +207,7 @@ export default function Dashboard() {
           </div>
         </Col>
         <Col span={12} className="chart-item">
-          <Row className="chart-title">総支出額</Row>
+          <Row className="chart-title">支出分析</Row>
           <PieChart
             colors={colors}
             series={[

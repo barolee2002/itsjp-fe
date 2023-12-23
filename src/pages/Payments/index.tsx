@@ -38,10 +38,8 @@ function Payments() {
     }
 
     const handleShowSizeChange: PaginationProps['onShowSizeChange'] = (current, pageSize) => {
-        console.log(current, pageSize);
     };
     const handleChangePage: PaginationProps['onChange'] = (current, pageSize) => {
-        console.log(current);
     }
     const handleOpenCreatePayment = () => {
         navigate(`create`)

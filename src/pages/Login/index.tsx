@@ -40,7 +40,6 @@ function Login() {
                 password
             })
                 .then((response) => {
-                    console.log(response);
                     if (response.data.status === 400) {
 
                         errorMessage('error', 'ユーザー名またはパスワードが間違っています')

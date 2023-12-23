@@ -79,7 +79,7 @@ function PaymentPlans() {
         key: "id",
       },
       {
-        title: "名前",
+        title: "名",
         dataIndex: "name",
         className: "noHover",
 
@@ -95,7 +95,7 @@ function PaymentPlans() {
         key: "category",
       },
       {
-        title: "額",
+        title: "目標金額",
         dataIndex: "amount",
         width: 160,
         className: "noHover",
@@ -106,7 +106,7 @@ function PaymentPlans() {
         ),
       },
       {
-        title: "残る",
+        title: "残高",
         dataIndex: "spentMoney",
         width: 160,
         className: "noHover",
@@ -117,7 +117,7 @@ function PaymentPlans() {
         ),
       },
       {
-        title: "時間",
+        title: "開始日",
         dataIndex: "time",
         className: "noHover",
 
@@ -174,7 +174,6 @@ function PaymentPlans() {
         totalMoney += planItem.amount;
       });
 
-      console.log(totalMoney);
       return totalMoney;
     };
 

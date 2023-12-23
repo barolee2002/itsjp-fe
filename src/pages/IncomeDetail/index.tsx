@@ -51,7 +51,6 @@ function IncomeDetail() {
   }, [param.id]);
 
   const handleAddIncome = async () => {
-    console.log(income);
     
     const update = axiosClient.put(`income/${income.incomeId}`, { ...income });
     update.then(() => {

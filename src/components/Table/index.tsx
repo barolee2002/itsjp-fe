@@ -43,7 +43,7 @@ function TableContent(props: Props) {
             key: 'id',
         },
         {
-            title: '名前',
+            title: '名',
             dataIndex: 'name',
             className: 'noHover',
 
@@ -52,7 +52,7 @@ function TableContent(props: Props) {
         },
         
         {
-            title: '額',
+            title: '金額',
             dataIndex: 'amount',
             width: 195,
             className: 'noHover',
@@ -61,7 +61,7 @@ function TableContent(props: Props) {
             render: (item : number) => <p className='m-0'>¥ {item.toLocaleString()}</p>
         },
         {
-            title: '時間',
+            title: '日付',
             dataIndex: 'date',
             className: 'noHover',
 

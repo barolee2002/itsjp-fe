@@ -36,10 +36,8 @@ function Incomes() {
 
     }
     const handleShowSizeChange: PaginationProps['onShowSizeChange'] = (current, pageSize) => {
-        console.log(current, pageSize);
     };
     const handleChangePage: PaginationProps['onChange'] = (current, pageSize) => {
-        console.log(current);
     }
     const handleAddIncome = () => {
         navigate(`create`)
@@ -62,7 +60,6 @@ function Incomes() {
         setIncomeHistory(() => {
             return incomesList.map((item, index) => {
                 let parseDay = new Date(item.time)
-                console.log(getFormattedDate(parseDay));
                 
                 return {
                     ...item,
@@ -81,7 +78,7 @@ function Incomes() {
     return (
         <div >
             <Row className='page-heading-income'>
-                <Col className='page-heading-income-name'>所得</Col>
+                <Col className='page-heading-income-name'>収入</Col>
                 <Col span={8}>
                     <Row gutter={[12, 24]} style={{ justifyContent: 'space-between' }}>
                         

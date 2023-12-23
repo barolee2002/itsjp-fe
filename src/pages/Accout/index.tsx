@@ -34,7 +34,7 @@ import {
   UploadProps,
 } from "antd/lib/upload/interface";
 import { ErrorMessage } from "../../components/ErrorMessage";
-import avtEditIcon from "../../assets/avt-edit.svg"
+import avtEditIcon from "../../assets/avt-edit.svg";
 // import {storage} from '../../firebase'
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
@@ -75,7 +75,6 @@ function Accout() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      console.log(e.target.files[0]);
 
       setFile(e.target.files[0]);
     }
@@ -114,7 +113,7 @@ function Accout() {
   };
   const handleUpdate = async () => {
     const formData = new FormData();
-    
+
     formData.append("userName", userInfor.userName);
     formData.append("fullName", userInfor.fullName);
     formData.append("email", userInfor.email);
@@ -135,8 +134,27 @@ function Accout() {
         })
         .then(() => {
           dispatch(updateInfor(userInfor));
+          let oldUser = localStorage.getItem("userLogin");
+          if (oldUser !== null) {
+            try {
+              const parsedUser = JSON.parse(oldUser);
+              localStorage.setItem(
+                "userInfor",
+                JSON.stringify({
+                  ...parsedUser,
+                  password: userInfor.password,
+                  username: userInfor.userName,
+                })
+              );
+            } catch (error) {
+              console.error("Error parsing userLogin JSON:", error);
+            }
+          } else {
+            console.log("userLogin is null");
+          }
+
           errorMessage("success", "情報が正常に変更されました");
-          setEdit(false)
+          setEdit(false);
         }));
     if (!(checkNewPassword && newPassword !== "")) {
       errorMessage("error", "すべての情報を入力してください");
@@ -176,7 +194,7 @@ function Accout() {
 
             // src={avatarDataUrl}/\
           />
-           {/* {edit &&<label className="upload-file-label">
+          {/* {edit &&<label className="upload-file-label">
             <img src={avtEditIcon} alt="avt-icon" />
             <input
               className="upload-file"
@@ -213,7 +231,7 @@ function Accout() {
             <Input
               className="infor-input"
               disabled={!edit}
-              placeholder="Nguyen Binh"
+              placeholder="ログイン名を入力してください"
               value={userInfor.userName}
               onChange={(e) => {
                 handleChangeInfor("userName", e.target.value);
@@ -225,7 +243,7 @@ function Accout() {
             <Input
               className="infor-input"
               disabled={!edit}
-              placeholder="Nguyen Binh"
+              placeholder="名前を入力してください"
               value={userInfor.fullName}
               onChange={(e) => {
                 handleChangeInfor("fullName", e.target.value);
@@ -237,7 +255,7 @@ function Accout() {
             <Input
               className="infor-input"
               disabled={!edit}
-              placeholder="Nguyen Binh"
+              placeholder="住み所を入力してください"
               value={userInfor.address}
               onChange={(e) => {
                 handleChangeInfor("address", e.target.value);

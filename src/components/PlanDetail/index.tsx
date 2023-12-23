@@ -34,7 +34,7 @@ export function PlanDetail({ detail, setDetail, categories }: Props) {
     <Row className="content">
       <Row gutter={[72, 0]} className="full-width">
         <Col span={12} className="input-box">
-          <p className="input-title">名前</p>
+          <p className="input-title">名</p>
           <Input
             className="input-content"
             placeholder="給料"
@@ -50,7 +50,7 @@ export function PlanDetail({ detail, setDetail, categories }: Props) {
           />
         </Col>
         <Col span={12} className="input-box">
-          <p className="input-title">額</p>
+          <p className="input-title">目標金額</p>
           <InputNumber
             className="input-content"
             formatter={(value) =>
@@ -94,7 +94,7 @@ export function PlanDetail({ detail, setDetail, categories }: Props) {
         </Col>
         <Col span={12} className="input-box">
           <p className="input-title">終了日</p>
-          <p className="input-content">{oneMonthFromDate(detail.time)}</p>
+          <p className="input-content">{detail.time !== undefined ? oneMonthFromDate(detail.time) : undefined}</p>
         </Col>
         <Col span={12} className="input-box">
           <p className="input-title">カテゴリー</p>

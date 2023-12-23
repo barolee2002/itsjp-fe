@@ -33,7 +33,6 @@ function AddingIncome() {
     });
   };
   const handleAddIncome = async () => {
-    console.log(dataPost);
     
     dataPost.amount !== undefined &&
       dataPost.time !== undefined &&
