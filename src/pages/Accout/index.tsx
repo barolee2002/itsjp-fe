@@ -139,7 +139,7 @@ function Accout() {
             try {
               const parsedUser = JSON.parse(oldUser);
               localStorage.setItem(
-                "userInfor",
+                "userLogin",
                 JSON.stringify({
                   ...parsedUser,
                   password: userInfor.password,
@@ -286,7 +286,7 @@ function Accout() {
                   type={typePassword.newPassword === true ? "password" : "text"}
                   prefix={<KeyOutlined />}
                   className="infor-input"
-                  placeholder="Nguyen Binh"
+                  placeholder="パスワードを入力してください"
                   suffix={
                     typePassword.newPassword ? (
                       <EyeOutlined
@@ -315,7 +315,7 @@ function Accout() {
                   }
                   prefix={<KeyOutlined />}
                   className="infor-input"
-                  placeholder="Nguyen Binh"
+                  placeholder="パスワードを確認してください"
                   onFocus={() => setCheckNewPassword(true)}
                   onChange={(e) => {
                     setCheckNewPassword(true);

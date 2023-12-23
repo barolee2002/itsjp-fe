@@ -48,6 +48,8 @@ axiosClient.interceptors.response.use(
       if (loginUser != null) {
         user = JSON.parse(loginUser);
       }
+      console.log(user.password);
+      
 
       updateAxiosAccessToken("");
       const refeshToken = await axiosClient.post("/user/login", {
